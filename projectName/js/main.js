@@ -1,3 +1,9 @@
+// Teng Ma
+// Updated: 4/27/19
+// I draw the pig character and the tree.
+// After you got 1500 score, there will be a rainbow in the sky.
+
+
 // define MainMenu state and methods
 var MainMenu = function(game) {};
 MainMenu.prototype = {
@@ -9,26 +15,35 @@ MainMenu.prototype = {
 		// set load path and load assets
 		game.load.audio('bgm', 'assets/audio/bgm.mp3' );
 		game.load.audio('appear', 'assets/audio/appear.wav' );
+		game.load.audio('Meow1', 'assets/audio/catMeow.mp3')
 		this.load.path = 'assets/img/';
 		this.load.atlas('atlas', 'atlassprites.png', 'atlassprites.json');
 		this.load.image('arrowKey', 'arrowKey.png');
 		this.load.image('talltrees', 'talltrees.png');
 		this.load.image('rainbow', 'rainbow.png');
+		this.load.image('background', 'project/background.png');
+		this.load.image('title', 'project/title.png');
+		this.load.image('startbutton', 'project/cat.png' );
+		this.load.image('firstcat', 'project/cat.png' );
+		
 	},
 	create: function() {
 		initWordList();
 		// change bg color
-		game.stage.backgroundColor = getRandomHexColor();
+		//game.stage.backgroundColor = getRandomHexColor();
 
-		printMessages('Endless Runner', 'Press SPACEBAR to begin');
+		//printMessages('Endless Runner', 'Press SPACEBAR to begin');
+		this.startSound = game.add.audio('appear');
+		this.title = this.add.sprite(0, 0, 'title');
+		this.startbutton = this.add.button(420, 380, 'startbutton', clickStart, this, 0, 0, 0 );
 	},
 	update: function() {
 		// main menu logic
-		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+		/*if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
 			// pass this.level to next state
 			// .start(key, clearWorld, clearCache, parameter)
 			game.state.start('Play', true, false, this.level, this.life);
-		}
+		}*/
 	}
 }
 
@@ -55,14 +70,16 @@ Play.prototype = {
 		this.bgm.loop = true;
 		this.bgm.volume = 0.25;
 		this.appear = game.add.audio('appear');
-
+		this.Meow1 = game.add.audio('Meow1');
 		this.bgm.play();
 
 		this.score = 0;
 		
 
 		// add bg as tile sprite
-		this.talltrees = this.add.tileSprite(0,0, game.width, game.height, 'talltrees');
+		//this.talltrees = this.add.tileSprite(0,0, game.width, game.height, 'talltrees');
+		this.background = this.add.sprite(0, 0, 'background');
+		
 
 		// set up world physics
 		game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -137,7 +154,7 @@ Play.prototype = {
 		this.rainbow.alpha = 0; 
 		this.rainbow.z = 0;
 
-		
+		this.firstCat = game.add.button(100, 420, 'firstcat', findFirstCat, this, 0, 0, 0);
 
 	},
 	update: function() {
@@ -147,7 +164,7 @@ Play.prototype = {
 		this.game.physics.arcade.collide(this.treeb, this.ground);
 
 		// update tileSprite background (tweak for more "speed")
-		this.talltrees.tilePosition.x -= 4;
+		//this.talltrees.tilePosition.x -= 4;
 
 		// update score
 		this.score = this.game.math.roundAwayFromZero(this.game.time.totalElapsedSeconds() * 100);
@@ -309,10 +326,20 @@ function collisionTree(pig, tree) {
     
 }
 
+function clickStart(){
+	this.startSound.play();
+	game.state.start('Play', true, false, this.level, this.life);
+	
+}
+
+function findFirstCat(){
+	this.Meow1.play();
+	this.firstcatinstru = game.add.text(100, 420, 'you find the cat', { fontSize: '32px', fill: '#000' });
+}
 
 
 // define game, add states, and start Preloader
-var game = new Phaser.Game(840, 525, Phaser.AUTO, 'phaser');
+var game = new Phaser.Game(950, 620, Phaser.AUTO, 'phaser');
 game.state.add('MainMenu', MainMenu);
 game.state.add('Play', Play);
 game.state.add('GameOver', GameOver);
