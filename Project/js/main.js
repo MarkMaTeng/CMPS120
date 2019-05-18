@@ -5,6 +5,8 @@
 
 
 // define MainMenu state and methods
+var catFinded = 1;
+var scorebar;
 var inOven = false;
 var inPipe = false;
 var inBanana = false;
@@ -13,6 +15,7 @@ var inBanana = false;
 var cupcakecatpicked = false;
 var pipecatpicked = false;
 var bananacatpicked = false;
+var fishbowlpicked = false;
 
 var MainMenu = function(game) {};
 MainMenu.prototype = {
@@ -33,14 +36,21 @@ MainMenu.prototype = {
 		this.load.image('startbutton', 'project/cat.png' );
 		this.load.image('firstcat', 'project/cat.png' );
 		this.load.image('openoven', 'project/openoven.png');
-		this.load.spritesheet('pipecat', 'project/pipecat.png');
+		this.load.atlas('pipecat', 'project/pipecat.png', 'project/pipecat.json');
+		this.load.atlas('scorebar', 'project/scorebar.png', 'project/scorebar.json');
 		this.load.image('cupcakecat', 'project/cat.png');
 		this.load.image('oventrigger', 'project/oventrigger.png');
 		this.load.image('pipe', 'project/pipe.png');
-		this.load.image('trigger', 'project/oventrigger.png' );
+		this.load.image('trigger', 'project/oventrigger.png' );//oventrigger.png
 		this.load.image('back', 'project/cat.png');
 		this.load.image('banana', 'project/cat.png');
 		this.load.image('bananacat', 'project/cat.png');
+		this.load.image('lamp', 'project/cat.png');
+		this.load.image('lampcabinet', 'project/cat.png');
+		this.load.image('fishbowl', 'project/cat.png');
+		this.load.image('fishbowlcabinet', 'project/cat.png');
+		this.load.image('iphone', 'project/cat.png');
+		
 	},
 	create: function() {
 		initWordList();
@@ -102,8 +112,14 @@ Play.prototype = {
 		this.scoreText = game.add.text(30, 50, 'Score: 0', { fontSize: '32px', fill: '#000' });
 		this.game.time.reset();
 
+		scorebar = game.add.sprite(50, 100, 'scorebar', '1');
 
-
+		this.fishbowlCabinet = game.add.button(610, 150, 'trigger', openFishBowlCabinet, this, 0, 0, 0);
+		this.fishbowlCabinet.width = 150;
+		this.fishbowlCabinet.height = 120;
+		
+		
+		
 		this.firstCat = game.add.button(100, 420, 'firstcat', findFirstCat, this, 0, 0, 0);
 		//ovencat
 		this.oventrigger = game.add.button(450, 200, 'oventrigger', openOven, this, 0, 0, 0);
@@ -117,6 +133,7 @@ Play.prototype = {
 		this.bananatrigger = game.add.button(835, 2, 'trigger', bananaEvent, this, 0, 0, 0);
 		this.bananatrigger.width = 50;
 		this.bananatrigger.height = 50;
+	
 	},
 	update: function() {
 
@@ -150,6 +167,14 @@ GameOver.prototype = {
 		}
 	}
 }
+
+
+
+
+
+
+
+
 
 // this is simply here to avoid running out of words
 function initWordList() {
@@ -199,18 +224,49 @@ function printMessages(top_msg, btm_msg) {
 	//message.anchor.set(0.5);
 }
 
-function collisionTree(pig, tree) {
-	// Removes the baddie
-	this.bgm.pause();
-    game.state.start('GameOver', true, false, this.score);
-    
-}
-
 function clickStart(){
 	this.startSound.play();
 	game.state.start('Play', true, false, this.level, this.life);
 	
 }
+
+//分数条进度
+function scoreBarPlus(){	
+	catFinded ++;
+	console.log(catFinded);
+	var scoreBarFrame = catFinded.toString();
+	scorebar.frameName = scoreBarFrame;
+}
+
+
+function openFishBowlCabinet(){
+	this.closefishbowl = game.add.button(610, 150, 'fishbowlcabinet', closeFishBowlCabinet, this, 0, 0, 0);
+	this.closefishbowl.width = 150;
+	this.closefishbowl.height = 120;
+	
+	if(fishbowlpicked == false){
+		this.fishbowl = game.add.button(610,150, 'fishbowl', pickFishBowl, this, 0, 0, 0);
+		this.fishbowl.width = 50;
+		this.fishbowl.height = 50;
+	}
+
+}
+
+function pickFishBowl(){
+	fishbowlpicked = true;
+	this.fishbowl.destroy();
+	
+}
+
+function closeFishBowlCabinet(){
+	this.closefishbowl.destroy();
+	this.fishbowl.destroy();
+	
+}
+
+
+
+
 
 function findFirstCat(){
 	this.Meow1.play();
@@ -243,6 +299,7 @@ function pickupcupcakecat(){
 	this.Meow1.play();
 	cupcakecatpicked = true;
 	this.cupcakecat.destroy();
+	scoreBarPlus();
 	
 }
 //PIPE场景
@@ -261,10 +318,12 @@ function pipeEvent(){
 function pipeCatOut(){
 	this.openpipe.destroy();
 	if(pipecatpicked == false){
-		this.pipeCat = this.add.sprite(0, 0, 'pipecat');
-		/*this.pipeCat.animations.add('flow', [0, 1, 2], 3, false);
-		this.pipeCat.animations.play('flow');*/
+		this.pipeCat = this.add.sprite(0, 0, 'pipecat', 'pipecat1');
+		this.pipeCat.animations.add('flow', ['pipecat1', 'pipecat2', 'pipecat3'], 2, false);
+		this.pipeCat.animations.play('flow');
 		this.pickpipecat = this.add.button(375, 150, 'trigger', pickPipeCat, this, 0, 0, 0);
+		this.pickpipecat.width = 150;
+		this.pickpipecat.height = 600;
 	}
 }
 //抓pipecat
@@ -273,13 +332,14 @@ function pickPipeCat(){
 	pipecatpicked = true;
 	this.pipeCat.destroy();
 	this.pickpipecat.destroy();
+	scoreBarPlus();
 }
 //退出pipe场景，清空所有
 function pipesOut(){
 	this.pipe.destroy();
 	this.openpipe.destroy();
-	this.pipeCat.destroy();
 	this.backFromPipe.destroy();
+	this.pipeCat.destroy();////////这里要修改修复BUG
 	this.pickpipecat.destroy();
 	inPipe = false;//离开pipe场景
 }
@@ -313,10 +373,11 @@ function pickBananaCat(){
 	this.bananaCatOut.destroy();
 	this.bananaInstruction.destroy();
 	bananacatpicked = true;
+	scoreBarPlus();
 }
 
 // define game, add states, and start Preloader
-var game = new Phaser.Game(950, 620, Phaser.AUTO, 'phaser');
+var game = new Phaser.Game(950, 620, Phaser.AUTO, 'phaser');//950, 620
 game.state.add('MainMenu', MainMenu);
 game.state.add('Play', Play);
 game.state.add('GameOver', GameOver);
