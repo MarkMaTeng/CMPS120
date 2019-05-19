@@ -1,21 +1,23 @@
-// Teng Ma
-// Updated: 4/27/19
-// I draw the pig character and the tree.
-// After you got 1500 score, there will be a rainbow in the sky.
 
-
-// define MainMenu state and methods
 var catFinded = 1;
 var scorebar;
 var inOven = false;
 var inPipe = false;
 var inBanana = false;
-
+var itemDistance = 0;
 
 var cupcakecatpicked = false;
 var pipecatpicked = false;
 var bananacatpicked = false;
 var fishbowlpicked = false;
+var lamppicked = false;
+
+var fishbowling = false;
+var lamping = false;
+
+var fishbowlPosition;
+var lampPosition;
+
 
 var MainMenu = function(game) {};
 MainMenu.prototype = {
@@ -49,8 +51,11 @@ MainMenu.prototype = {
 		this.load.image('lampcabinet', 'project/cat.png');
 		this.load.image('fishbowl', 'project/cat.png');
 		this.load.image('fishbowlcabinet', 'project/cat.png');
+		this.load.image('fishbowlcat', 'project/cat.png');
 		this.load.image('iphone', 'project/cat.png');
-		
+		this.load.image('lampcabinet', 'project/cat.png');
+		this.load.image('lamp', 'project/lamp.png');
+		this.load.image('itembar', 'platform.png');
 	},
 	create: function() {
 		initWordList();
@@ -74,7 +79,7 @@ var Play = function() {
 	this.MAX_Y_VELOCITY = 5000;
 	this.ACCELERATION = 1500;
 	this.DRAG = 600;			// note that DRAG < ACCELERATION (to create sliding)
-	this.GRAVITY = 2600;
+	//this.GRAVITY = 2600;
 	this.JUMP_SPEED = -700;	// negative y-values jump up
 };
 Play.prototype = {
@@ -90,17 +95,22 @@ Play.prototype = {
 		this.Meow1 = game.add.audio('Meow1');
 		this.bgm.play();
 
-		this.score = 0;
 
 		
 		// add bg as tile sprite
 		
 		this.background = this.add.sprite(0, 0, 'background');
-		
+		this.itembar = this.add.sprite(200, 580, 'itembar');
+		this.itembar.width = 600;
+		this.itembar.height = 120;
 
 		// set up world physics
 		game.physics.startSystem(Phaser.Physics.ARCADE);
-		game.physics.arcade.gravity.y = this.GRAVITY;
+		//game.physics.arcade.gravity.y = this.GRAVITY;
+		
+		
+		/*this.itemInUse = game.add.group();
+		this.physics.arcade.enable(this.itemInUse);*/
 
 		
 		// add arrows
@@ -118,6 +128,9 @@ Play.prototype = {
 		this.fishbowlCabinet.width = 150;
 		this.fishbowlCabinet.height = 120;
 		
+		this.lampCabinet = game.add.button(750, 220, 'trigger', openLampCabinet, this, 0, 0, 0);
+		this.lampCabinet.width = 75;
+		this.lampCabinet.height = 75;
 		
 		
 		this.firstCat = game.add.button(100, 420, 'firstcat', findFirstCat, this, 0, 0, 0);
@@ -133,15 +146,35 @@ Play.prototype = {
 		this.bananatrigger = game.add.button(835, 2, 'trigger', bananaEvent, this, 0, 0, 0);
 		this.bananatrigger.width = 50;
 		this.bananatrigger.height = 50;
-	
+		
+		this.fishbowlCatTrigger = game.add.button(220, 0, 'trigger', fishbowlCatComing, this, 0, 0, 0);
+		
+		
+		
 	},
 	update: function() {
-
-
-	    // debug toggle
-	    if(this.input.keyboard.justPressed(Phaser.Keyboard.T)) {
-	    	this.debug = !this.debug;
-	    }
+		
+		//鱼缸跟随鼠标
+		if(fishbowling == true){
+			this.physics.arcade.moveToPointer(this.movingFishbowl, 1000);
+			if(Phaser.Rectangle.contains(this.movingFishbowl.body, this.input.x, this.input.y)){
+				this.movingFishbowl.body.velocity.setTo(0, 0);
+			}
+			
+		
+		}
+    	//台灯跟随鼠标
+		if(lamping == true){
+			this.physics.arcade.moveToPointer(this.movingLamp, 1000);
+			if(Phaser.Rectangle.contains(this.movingLamp.body, this.input.x, this.input.y)){
+				this.movingLamp.body.velocity.setTo(0, 0);
+			}	
+			
+			
+		}
+	
+	
+	
 	},
 	render: function() {
 
@@ -238,30 +271,132 @@ function scoreBarPlus(){
 	scorebar.frameName = scoreBarFrame;
 }
 
-
+//鱼缸柜子
 function openFishBowlCabinet(){
-	this.closefishbowl = game.add.button(610, 150, 'fishbowlcabinet', closeFishBowlCabinet, this, 0, 0, 0);
-	this.closefishbowl.width = 150;
-	this.closefishbowl.height = 120;
-	
-	if(fishbowlpicked == false){
-		this.fishbowl = game.add.button(610,150, 'fishbowl', pickFishBowl, this, 0, 0, 0);
-		this.fishbowl.width = 50;
-		this.fishbowl.height = 50;
+	if(inOven == false && inPipe == false){
+		this.closefishbowl = game.add.button(610, 150, 'fishbowlcabinet', closeFishBowlCabinet, this, 0, 0, 0);
+		this.closefishbowl.width = 150;
+		this.closefishbowl.height = 120;
+		
+		if(fishbowlpicked == false){
+			this.fishbowl = game.add.button(610,150, 'fishbowl', pickFishBowl, this, 0, 0, 0);
+			this.fishbowl.width = 50;
+			this.fishbowl.height = 50;
+		}
 	}
-
 }
-
+//拿起鱼缸
 function pickFishBowl(){
 	fishbowlpicked = true;
 	this.fishbowl.destroy();
-	
+	this.fishbowlItem = game.add.button(200  + 100* itemDistance , 550, 'fishbowl', usingFishBowl, this,0, 0, 0);
+	fishbowlPosition = itemDistance;
+	itemDistance ++;
 }
 
+//关上鱼缸柜子
 function closeFishBowlCabinet(){
 	this.closefishbowl.destroy();
 	this.fishbowl.destroy();
 	
+}
+//点击道具鱼缸
+function usingFishBowl(){
+	if(lamping == false){
+		this.fishbowlItem.destroy();
+		this.movingFishbowl = this.add.sprite(this.input.mousePointer.x, this.input.mousePointer.y, 'fishbowl');
+		this.movingFishbowl.anchor.set(0.5);
+		this.physics.arcade.enable(this.movingFishbowl);
+		fishbowling = true;
+		
+		//var place = itemDistance;
+		this.backbar = game.add.button(200, 580, 'trigger', returnFishBowl, this, 0, 0, 0);
+		this.backbar.width = 600;
+		this.backbar.height = 120;
+	}
+	
+}
+
+//将鱼缸返回至物品栏
+function returnFishBowl(){
+	fishbowling = false;
+	this.movingFishbowl.destroy();
+	this.backbar.destroy();
+	this.fishbowlItem = game.add.button(200  + 100* fishbowlPosition, 550, 'fishbowl', usingFishBowl, this,0, 0, 0);
+}
+
+//鱼缸猫出现
+function fishbowlCatComing(){
+	if(fishbowling == true){
+		fishbowling = false;
+		this.fishbowlCatTrigger.destroy();
+		this.movingFishbowl.destroy();
+		this.backbar.destroy();
+		this.fishbowlCat = game.add.button(220, 0, 'fishbowlcat', pickFishbowlCat, this, 0, 0, 0);		
+	}
+	
+}
+
+//收集鱼缸猫
+function pickFishbowlCat(){
+	this.fishbowlCat.destroy();
+	this.Meow1.play();
+	scoreBarPlus();
+	
+}
+
+
+
+
+//台灯柜子
+function openLampCabinet(){
+	if(inOven == false && inPipe == false){
+	this.closelampcabinet = game.add.button(750, 220, 'lampcabinet', closeLampCabinet, this, 0, 0, 0);
+	this.closelampcabinet.width = 75;
+	this.closelampcabinet.height = 75;
+	
+	if(lamppicked == false){
+		this.lamp = game.add.button(750, 220, 'lamp', pickLamp, this, 0, 0, 0);
+		this.lamp.width = 50;
+		this.lamp.height = 50;
+		}	
+	}
+}
+//拿起台灯
+function pickLamp(){
+	lamppicked = true;
+	this.lamp.destroy();
+	this.lampItem = game.add.button(200 + 100* itemDistance, 550, 'lamp', usingLamp, this, 0, 0, 0);
+	lampPosition = itemDistance;
+	itemDistance ++;
+}
+
+//关上台灯柜子
+function closeLampCabinet(){
+	this.closelampcabinet.destroy();
+	this.lamp.destroy();
+}
+
+//点击道具台灯
+function usingLamp(){
+	if(fishbowling == false){
+		this.lampItem.destroy();
+		this.movingLamp = this.add.sprite(this.input.mousePointer.x, this.input.mousePointer.y, 'lamp');
+		this.movingLamp.anchor.set(0.5);
+		this.physics.arcade.enable(this.movingLamp);
+		lamping = true;
+		
+		this.backbar = game.add.button(200, 580, 'trigger', returnLamp, this, 0, 0, 0);
+		this.backbar.width = 600;
+		this.backbar.height = 120;
+	}
+}
+//返回台灯至物品栏
+function returnLamp(){
+	lamping = false;
+	this.movingLamp.destroy();
+	this.backbar.destroy();
+	this.lampItem = game.add.button(200  + 100* lampPosition, 550, 'lamp', usingLamp, this,0, 0, 0);
 }
 
 
@@ -347,6 +482,7 @@ function pipesOut(){
 function bananaEvent(){
 	if(inOven == false && inPipe == false){//判断是否在别的场景
 		inBanana = true;
+		this.bananatrigger.destroy();
 		console.log(inOven, inBanana, inPipe);
 		this.banana = this.add.button(250, 0, 'banana', openBanana,this,  0, 0, 0);
 		this.banana.width = 600;
@@ -358,6 +494,7 @@ function bananaEvent(){
 function openBanana(){
 	this.banana.destroy();  //删掉香蕉
 	this.bananaInstruction.destroy();
+	this.bananatrigger = game.add.button(835, 2, 'trigger', bananaEvent, this, 0, 0, 0);
 	inBanana = false;
 	if(bananacatpicked == false){//判断有没有香蕉猫
 		this.bananaCatOut = this.add.button(250, 0, 'bananacat', pickBananaCat,this, 0, 0, 0);
@@ -375,6 +512,11 @@ function pickBananaCat(){
 	bananacatpicked = true;
 	scoreBarPlus();
 }
+
+
+
+
+
 
 // define game, add states, and start Preloader
 var game = new Phaser.Game(950, 620, Phaser.AUTO, 'phaser');//950, 620
