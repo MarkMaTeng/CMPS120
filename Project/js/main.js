@@ -11,6 +11,8 @@ var pipecatpicked = false;
 var bananacatpicked = false;
 var fishbowlpicked = false;
 var lamppicked = false;
+var steamcatpicked = false;
+
 
 var fishbowling = false;
 var lamping = false;
@@ -40,21 +42,21 @@ MainMenu.prototype = {
 		this.load.image('openoven', 'project/openoven.png');
 		this.load.atlas('pipecat', 'project/pipecat.png', 'project/pipecat.json');
 		this.load.atlas('scorebar', 'project/scorebar.png', 'project/scorebar.json');
-		this.load.image('cupcakecat', 'project/cat.png');
+		this.load.image('cupcakecat', 'project/cupcakecat.png');
 		this.load.image('oventrigger', 'project/oventrigger.png');
 		this.load.image('pipe', 'project/pipe.png');
 		this.load.image('trigger', 'project/oventrigger.png' );//oventrigger.png
-		this.load.image('back', 'project/cat.png');
-		this.load.image('banana', 'project/cat.png');
-		this.load.image('bananacat', 'project/cat.png');
-		this.load.image('lamp', 'project/cat.png');
+		this.load.image('back', 'project/back.png');
+		this.load.image('banana', 'project/banana.png');
+		this.load.image('bananacat', 'project/bananacat.png');
+		this.load.image('lamp', 'project/lamp.png');
 		this.load.image('lampcabinet', 'project/cat.png');
-		this.load.image('fishbowl', 'project/cat.png');
-		this.load.image('fishbowlcabinet', 'project/cat.png');
-		this.load.image('fishbowlcat', 'project/cat.png');
+		this.load.image('fishbowl', 'project/fishbowl.png');
+		this.load.image('fishbowlcabinet', 'project/fishbowlcabinet.png');
+		this.load.image('fishbowlcat', 'project/fishbowlcat.png');
 		this.load.image('iphone', 'project/cat.png');
 		this.load.image('lampcabinet', 'project/cat.png');
-		this.load.image('lamp', 'project/lamp.png');
+		this.load.image('steamcat', 'project/steamcat.png');
 		this.load.image('itembar', 'platform.png');
 	},
 	create: function() {
@@ -62,6 +64,8 @@ MainMenu.prototype = {
 
 		this.startSound = game.add.audio('appear');
 		this.title = this.add.sprite(0, 0, 'title');
+		this.title.width = 950;
+		this.title.height = 620;
 		this.startbutton = this.add.button(420, 380, 'startbutton', clickStart, this, 0, 0, 0 );
 	},
 	update: function() {
@@ -132,6 +136,9 @@ Play.prototype = {
 		this.lampCabinet.width = 75;
 		this.lampCabinet.height = 75;
 		
+		this.steamPot = game.add.button(560, 150, 'trigger', steamcat, this, 0, 0, 0);
+		this.steamPot.width = 30;
+		this.steamPot.height = 30;
 		
 		this.firstCat = game.add.button(100, 420, 'firstcat', findFirstCat, this, 0, 0, 0);
 		//ovencat
@@ -156,16 +163,17 @@ Play.prototype = {
 		
 		//鱼缸跟随鼠标
 		if(fishbowling == true){
-			this.physics.arcade.moveToPointer(this.movingFishbowl, 1000);
+			this.physics.arcade.moveToPointer(this.movingFishbowl, 3000);
 			if(Phaser.Rectangle.contains(this.movingFishbowl.body, this.input.x, this.input.y)){
 				this.movingFishbowl.body.velocity.setTo(0, 0);
 			}
 			
 		
 		}
+
     	//台灯跟随鼠标
 		if(lamping == true){
-			this.physics.arcade.moveToPointer(this.movingLamp, 1000);
+			this.physics.arcade.moveToPointer(this.movingLamp, 3000);
 			if(Phaser.Rectangle.contains(this.movingLamp.body, this.input.x, this.input.y)){
 				this.movingLamp.body.velocity.setTo(0, 0);
 			}	
@@ -274,14 +282,16 @@ function scoreBarPlus(){
 //鱼缸柜子
 function openFishBowlCabinet(){
 	if(inOven == false && inPipe == false){
-		this.closefishbowl = game.add.button(610, 150, 'fishbowlcabinet', closeFishBowlCabinet, this, 0, 0, 0);
-		this.closefishbowl.width = 150;
-		this.closefishbowl.height = 120;
+		this.closefishbowl = game.add.button(490, 320, 'fishbowlcabinet', closeFishBowlCabinet, this, 0, 0, 0);
+		this.closefishbowl.anchor.set(0.5, 0.5);
+		this.closefishbowl.width = 930;
+		this.closefishbowl.height = 650;
 		
 		if(fishbowlpicked == false){
-			this.fishbowl = game.add.button(610,150, 'fishbowl', pickFishBowl, this, 0, 0, 0);
-			this.fishbowl.width = 50;
-			this.fishbowl.height = 50;
+			this.fishbowl = game.add.button(640,220, 'fishbowl', pickFishBowl, this, 0, 0, 0);
+			this.closefishbowl.anchor.set(0.5, 0.5);
+			this.fishbowl.width = 30;
+			this.fishbowl.height = 30;
 		}
 	}
 }
@@ -305,7 +315,7 @@ function usingFishBowl(){
 	if(lamping == false){
 		this.fishbowlItem.destroy();
 		this.movingFishbowl = this.add.sprite(this.input.mousePointer.x, this.input.mousePointer.y, 'fishbowl');
-		this.movingFishbowl.anchor.set(0.5);
+		this.movingFishbowl.anchor.set(0.5, 0.5);
 		this.physics.arcade.enable(this.movingFishbowl);
 		fishbowling = true;
 		
@@ -345,7 +355,23 @@ function pickFishbowlCat(){
 	
 }
 
+function steamcat(){
+	if(steamcatpicked == false){
+		steamcatpicked = true;
+		this.steamPot = game.add.button(540, 70, 'steamcat', pickSteamlCat, this, 0, 0, 0);
+		this.steamPot.width = 75;
+		this.steamPot.height = 75;
+		}
 
+}
+
+function pickSteamlCat(){
+
+	this.steamPot.destroy();
+	this.Meow1.play();
+	scoreBarPlus();
+	
+}
 
 
 //台灯柜子
@@ -356,7 +382,7 @@ function openLampCabinet(){
 	this.closelampcabinet.height = 75;
 	
 	if(lamppicked == false){
-		this.lamp = game.add.button(750, 220, 'lamp', pickLamp, this, 0, 0, 0);
+		this.lamp = game.add.button(800, 220, 'lamp', pickLamp, this, 0, 0, 0);
 		this.lamp.width = 50;
 		this.lamp.height = 50;
 		}	
@@ -367,6 +393,8 @@ function pickLamp(){
 	lamppicked = true;
 	this.lamp.destroy();
 	this.lampItem = game.add.button(200 + 100* itemDistance, 550, 'lamp', usingLamp, this, 0, 0, 0);
+	this.lampItem.width = 120;
+	this.lampItem.height = 120;
 	lampPosition = itemDistance;
 	itemDistance ++;
 }
@@ -382,6 +410,8 @@ function usingLamp(){
 	if(fishbowling == false){
 		this.lampItem.destroy();
 		this.movingLamp = this.add.sprite(this.input.mousePointer.x, this.input.mousePointer.y, 'lamp');
+		this.movingLamp.width = 120;
+		this.movingLamp.height = 120;
 		this.movingLamp.anchor.set(0.5);
 		this.physics.arcade.enable(this.movingLamp);
 		lamping = true;
@@ -418,6 +448,8 @@ function openOven(){
 		this.openedOven.height = 200;*/
 		if(cupcakecatpicked == false){
 			this.cupcakecat = this.add.button(300, 200, 'cupcakecat', pickupcupcakecat, this, 0, 0, 0);
+			this.cupcakecat.width = 200;
+			this.cupcakecat.height = 200;
 			console.log(cupcakecatpicked);
 		}
 	}
@@ -487,20 +519,20 @@ function bananaEvent(){
 		this.banana = this.add.button(250, 0, 'banana', openBanana,this,  0, 0, 0);
 		this.banana.width = 600;
 		this.banana.height = 600;
-		this.bananaInstruction = game.add.text(250, 280, 'I will be a banana in the future version', { fontSize: '32px', fill: '#282' });
+		
 	}
 }
 //拨开香蕉
 function openBanana(){
 	this.banana.destroy();  //删掉香蕉
-	this.bananaInstruction.destroy();
+
 	this.bananatrigger = game.add.button(835, 2, 'trigger', bananaEvent, this, 0, 0, 0);
 	inBanana = false;
 	if(bananacatpicked == false){//判断有没有香蕉猫
 		this.bananaCatOut = this.add.button(250, 0, 'bananacat', pickBananaCat,this, 0, 0, 0);
 		this.bananaCatOut.width = 600;
 		this.bananaCatOut.height = 600;
-		this.bananaInstruction = game.add.text(250, 280, 'I will be the BANANA CAT in the future version', { fontSize: '32px', fill: '#282' });
+		
 	}
 
 }
@@ -508,7 +540,6 @@ function openBanana(){
 function pickBananaCat(){
 	this.Meow1.play();
 	this.bananaCatOut.destroy();
-	this.bananaInstruction.destroy();
 	bananacatpicked = true;
 	scoreBarPlus();
 }
