@@ -4,6 +4,7 @@ var scorebar;
 var inOven = false;
 var inPipe = false;
 var inBanana = false;
+var inStair = false;
 var itemDistance = 0;
 
 var cupcakecatpicked = false;
@@ -12,6 +13,7 @@ var bananacatpicked = false;
 var fishbowlpicked = false;
 var lamppicked = false;
 var steamcatpicked = false;
+var staircatpicked = false;
 
 
 var fishbowling = false;
@@ -58,6 +60,8 @@ MainMenu.prototype = {
 		this.load.image('lampcabinet', 'project/cat.png');
 		this.load.image('steamcat', 'project/steamcat.png');
 		this.load.image('itembar', 'platform.png');
+		this.load.image('stair', 'project/steps.png');
+		this.load.atlas('staircat', 'project/stairStep.png', 'project/stairStep.json');
 	},
 	create: function() {
 		initWordList();
@@ -132,6 +136,11 @@ Play.prototype = {
 		this.fishbowlCabinet.width = 150;
 		this.fishbowlCabinet.height = 120;
 		
+		this.stairtrigger = game.add.button(0,300, 'trigger', stairEvent, this, 0, 0, 0);
+		this.stairtrigger.anchor.set(0.5);
+		this.stairtrigger.width = 350;
+		this.stairtrigger.height = 600;
+
 		this.lampCabinet = game.add.button(750, 220, 'trigger', openLampCabinet, this, 0, 0, 0);
 		this.lampCabinet.width = 75;
 		this.lampCabinet.height = 75;
@@ -281,7 +290,7 @@ function scoreBarPlus(){
 
 //鱼缸柜子
 function openFishBowlCabinet(){
-	if(inOven == false && inPipe == false){
+	if(inOven == false && inPipe == false && inStair == false){
 		this.closefishbowl = game.add.button(490, 320, 'fishbowlcabinet', closeFishBowlCabinet, this, 0, 0, 0);
 		this.closefishbowl.anchor.set(0.5, 0.5);
 		this.closefishbowl.width = 930;
@@ -358,9 +367,9 @@ function pickFishbowlCat(){
 function steamcat(){
 	if(steamcatpicked == false){
 		steamcatpicked = true;
-		this.steamPot = game.add.button(540, 70, 'steamcat', pickSteamlCat, this, 0, 0, 0);
-		this.steamPot.width = 75;
-		this.steamPot.height = 75;
+		this.steamPot = game.add.button(500, 0, 'steamcat', pickSteamlCat, this, 0, 0, 0);
+		this.steamPot.width = 150;
+		this.steamPot.height = 150;
 		}
 
 }
@@ -376,7 +385,7 @@ function pickSteamlCat(){
 
 //台灯柜子
 function openLampCabinet(){
-	if(inOven == false && inPipe == false){
+	if(inOven == false && inPipe == false && inStair == false){
 	this.closelampcabinet = game.add.button(750, 220, 'lampcabinet', closeLampCabinet, this, 0, 0, 0);
 	this.closelampcabinet.width = 75;
 	this.closelampcabinet.height = 75;
@@ -440,7 +449,7 @@ function findFirstCat(){
 
 function openOven(){
 
-	if(inBanana == false && inPipe == false){//先判断是否在别的场景中以免穿模
+	if(inBanana == false && inPipe == false && inStair == false){//先判断是否在别的场景中以免穿模
 		inOven = true;//在烤箱场景
 		console.log(inOven, inBanana, inPipe);
 		this.openedOven = this.add.button(0, 0, 'openoven', closeOven, this, 0, 0, 0);
@@ -471,7 +480,7 @@ function pickupcupcakecat(){
 }
 //PIPE场景
 function pipeEvent(){
-	if(inOven == false && inBanana == false){//判断是否在别的场景
+	if(inOven == false && inBanana == false && inStair == false){//判断是否在别的场景
 		inPipe = true;
 		console.log(inOven, inBanana, inPipe);
 		this.pipe = this.add.sprite(0, 0, 'pipe');
@@ -510,9 +519,42 @@ function pipesOut(){
 	this.pickpipecat.destroy();
 	inPipe = false;//离开pipe场景
 }
+
+//楼梯场景
+function stairEvent(){
+	if(inOven == false && inBanana == false && inPipe == false){//判断是否在别的场景
+		inStair = true;
+		console.log(inOven, inBanana, inPipe, inStair);
+		this.stair = this.add.sprite(0, 0, 'stair');
+		this.stairCat = this.add.sprite(0, 0, 'staircat', 'step1');
+		this.stairCat.animations.add('roll', ['step1', 'step2', 'step3', 'step4'], 2, false);
+		this.stairCat.animations.play('roll');
+		this.pickstaircat = this.add.button(300, 500, 'trigger', pickStairCat, this, 0, 0, 0);
+		this.pickstaircat.anchor.set(0.5);
+		this.pickstaircat.width = 250;
+		this.pickstaircat.height = 300;
+		this.backFromStair = this.add.button(0, 0, 'back', stairOut, this, 0, 0, 0);
+	}
+}
+//抓stairCat
+function pickStairCat(){
+	this.Meow1.play();
+	staircatpicked = true;
+	this.stairCat.destroy();
+	this.pickstaircat.destroy();
+	scoreBarPlus();
+}
+//退出stair场景，清空所有
+function stairOut(){
+	this.stair.destroy();
+	this.backFromStair.destroy();
+	this.stairCat.destroy();////////这里要修改修复BUG
+	inStair = false;//离开stair场景
+}
+
 //香蕉登场
 function bananaEvent(){
-	if(inOven == false && inPipe == false){//判断是否在别的场景
+	if(inOven == false && inPipe == false && inStair == false ){//判断是否在别的场景
 		inBanana = true;
 		this.bananatrigger.destroy();
 		console.log(inOven, inBanana, inPipe);
