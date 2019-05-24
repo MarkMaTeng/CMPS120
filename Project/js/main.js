@@ -5,6 +5,7 @@ var inOven = false;
 var inPipe = false;
 var inBanana = false;
 var inStair = false;
+var inPhone =false;
 var itemDistance = 0;
 
 var cupcakecatpicked = false;
@@ -14,6 +15,7 @@ var fishbowlpicked = false;
 var lamppicked = false;
 var steamcatpicked = false;
 var staircatpicked = false;
+var longcatpicked = false;
 
 
 var fishbowling = false;
@@ -62,6 +64,11 @@ MainMenu.prototype = {
 		this.load.image('itembar', 'platform.png');
 		this.load.image('stair', 'project/steps.png');
 		this.load.atlas('staircat', 'project/stairStep.png', 'project/stairStep.json');
+		this.load.image('phone', 'project/cphone.png');
+		this.load.image('pano', 'project/panoMode.png');
+		this.load.image('longcatphoto', 'project/longCatPhoto.jpg');
+		this.load.image('longcat', 'project/longcatSprite.png');
+
 	},
 	create: function() {
 		initWordList();
@@ -130,7 +137,7 @@ Play.prototype = {
 		this.scoreText = game.add.text(30, 50, 'Score: 0', { fontSize: '32px', fill: '#000' });
 		this.game.time.reset();
 
-		scorebar = game.add.sprite(50, 100, 'scorebar', '1');
+		scorebar = game.add.sprite(850, 100, 'scorebar', '1');
 
 		this.fishbowlCabinet = game.add.button(610, 150, 'trigger', openFishBowlCabinet, this, 0, 0, 0);
 		this.fishbowlCabinet.width = 150;
@@ -148,6 +155,10 @@ Play.prototype = {
 		this.steamPot = game.add.button(560, 150, 'trigger', steamcat, this, 0, 0, 0);
 		this.steamPot.width = 30;
 		this.steamPot.height = 30;
+
+		this.phone = game.add.button(560, 350, 'phone', phoneEvent, this, 0, 0, 0);
+		this.phone.width = 30;
+		this.phone.height = 40;
 		
 		this.firstCat = game.add.button(100, 420, 'firstcat', findFirstCat, this, 0, 0, 0);
 		//ovencat
@@ -449,7 +460,7 @@ function findFirstCat(){
 
 function openOven(){
 
-	if(inBanana == false && inPipe == false && inStair == false){//先判断是否在别的场景中以免穿模
+	if(inBanana == false && inPipe == false && inStair == false && inPhone == false){//先判断是否在别的场景中以免穿模
 		inOven = true;//在烤箱场景
 		console.log(inOven, inBanana, inPipe);
 		this.openedOven = this.add.button(0, 0, 'openoven', closeOven, this, 0, 0, 0);
@@ -480,7 +491,7 @@ function pickupcupcakecat(){
 }
 //PIPE场景
 function pipeEvent(){
-	if(inOven == false && inBanana == false && inStair == false){//判断是否在别的场景
+	if(inOven == false && inBanana == false && inStair == false && inPhone == false){//判断是否在别的场景
 		inPipe = true;
 		console.log(inOven, inBanana, inPipe);
 		this.pipe = this.add.sprite(0, 0, 'pipe');
@@ -522,7 +533,7 @@ function pipesOut(){
 
 //楼梯场景
 function stairEvent(){
-	if(inOven == false && inBanana == false && inPipe == false){//判断是否在别的场景
+	if(inOven == false && inBanana == false && inPipe == false && inPhone == false){//判断是否在别的场景
 		inStair = true;
 		console.log(inOven, inBanana, inPipe, inStair);
 		this.stair = this.add.sprite(0, 0, 'stair');
@@ -552,9 +563,64 @@ function stairOut(){
 	inStair = false;//离开stair场景
 }
 
+//手机场景
+function phoneEvent(){
+	if(inOven == false && inBanana == false && inPipe == false && inStair == false){//判断是否在别的场景
+		inPhone = true;
+		console.log(inOven, inBanana, inPipe, inStair, inPhone);
+		this.catbackground = this.add.sprite(-600, 0, 'longcatphoto');
+		this.phone = this.add.sprite(0, 0, 'pano');
+		if(this.catbackground.x < 100)
+		{
+			this.leftKey = this.add.button(320, 500, 'arrowKey', moveLeft,this,  0, 0, 0);
+			//this.leftKey = this.add.sprite(480, 500, 'arrowKey');
+			this.leftKey.anchor.set(0.5);
+			this.leftKey.rotation = Math.PI/2*3;
+			this.game.inputEnabled = true;
+			//this.game.input.onHold.add(moveLeft, this);	
+		}
+		
+		this.backFromPhone = this.add.button(0, 0, 'back', phoneOut, this, 0, 0, 0);
+	}
+}
+//左移
+function moveLeft(){
+	this.catbackground.x += 140;
+	if(this.catbackground.x >= 100)
+		{
+			this.leftKey.destroy();
+		}
+}
+
+//退出phone场景，清空所有,出现长猫
+function phoneOut(){
+	inphone = false;//离开stair场景
+	if(this.catbackground.x >= 100)
+	{
+		this.longcat = this.add.button(450,350, 'longcat', picklongCat, this, 0, 0, 0);
+		this.longcat.anchor.set(0.5);
+		this.longcat.width = 300;
+		this.longcat.height = 100;
+
+	}
+	this.leftKey.destroy();
+	this.catbackground.destroy();
+	this.phone.destroy();
+	this.backFromPhone.destroy();
+	
+}
+
+//抓长猫
+function picklongCat(){
+	this.Meow1.play();
+	longcatpicked = true;
+	this.longcat.destroy();
+	scoreBarPlus();
+}
+
 //香蕉登场
 function bananaEvent(){
-	if(inOven == false && inPipe == false && inStair == false ){//判断是否在别的场景
+	if(inOven == false && inPipe == false && inStair == false && inPhone == false ){//判断是否在别的场景
 		inBanana = true;
 		this.bananatrigger.destroy();
 		console.log(inOven, inBanana, inPipe);
