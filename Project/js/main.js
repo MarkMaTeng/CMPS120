@@ -16,7 +16,8 @@ var lamppicked = false;
 var steamcatpicked = false;
 var staircatpicked = false;
 var longcatpicked = false;
-
+var havePipeCat = false;
+var shadowcatpicked = false;
 
 var fishbowling = false;
 var lamping = false;
@@ -41,7 +42,7 @@ MainMenu.prototype = {
 		this.load.image('arrowKey', 'arrowKey.png');
 		this.load.image('background', 'project/background.png');
 		this.load.image('title', 'project/title.png');
-		this.load.image('startbutton', 'project/cat.png' );
+		this.load.image('startbutton', 'project/oventrigger.png' );
 		this.load.image('firstcat', 'project/cat.png' );
 		this.load.image('openoven', 'project/openoven.png');
 		this.load.atlas('pipecat', 'project/pipecat.png', 'project/pipecat.json');
@@ -68,19 +69,38 @@ MainMenu.prototype = {
 		this.load.image('pano', 'project/panoMode.png');
 		this.load.image('longcatphoto', 'project/longCatPhoto.jpg');
 		this.load.image('longcat', 'project/longcatSprite.png');
-
+		this.load.image('shadowcat', 'project/shadowCat.PNG');
+		this.load.image('socket', 'project/cat.png');
+		this.load.image('lampopen', 'project/lampOpen.png');
+		this.load.image('creamcupcake', 'project/creamcupcake.png');
 	},
 	create: function() {
 		initWordList();
-
+		game.physics.startSystem(Phaser.Physics.ARCADE);
+		
 		this.startSound = game.add.audio('appear');
 		this.title = this.add.sprite(0, 0, 'title');
 		this.title.width = 950;
 		this.title.height = 620;
-		this.startbutton = this.add.button(420, 380, 'startbutton', clickStart, this, 0, 0, 0 );
+		this.startbutton = this.add.button(440, 565, 'startbutton', clickStart, this, 0, 0, 0 ); // 420, 350
+		
+		
+
+		this.mainMenuCat = this.add.sprite(420, 420, 'firstcat');
+		this.mainMenuCat.anchor.set(0.5, 0.5);
+		this.physics.arcade.enable(this.mainMenuCat);
+		this.mainMenuCat.body.velocity.x = -200;
 	},
 	update: function() {
-
+		if(this.mainMenuCat.x <= 50){
+			this.mainMenuCat.body.velocity.x = 200;
+			
+		}
+		if(this.mainMenuCat.x >= 900){
+			this.mainMenuCat.body.velocity.x = -200;
+			
+		}
+		
 	}
 }
 
@@ -143,10 +163,10 @@ Play.prototype = {
 		this.fishbowlCabinet.width = 150;
 		this.fishbowlCabinet.height = 120;
 		
-		this.stairtrigger = game.add.button(0,300, 'trigger', stairEvent, this, 0, 0, 0);
+		this.stairtrigger = game.add.button(0,200, 'trigger', stairEvent, this, 0, 0, 0);
 		this.stairtrigger.anchor.set(0.5);
 		this.stairtrigger.width = 350;
-		this.stairtrigger.height = 600;
+		this.stairtrigger.height = 400;
 
 		this.lampCabinet = game.add.button(750, 220, 'trigger', openLampCabinet, this, 0, 0, 0);
 		this.lampCabinet.width = 75;
@@ -160,7 +180,7 @@ Play.prototype = {
 		this.phone.width = 30;
 		this.phone.height = 40;
 		
-		this.firstCat = game.add.button(100, 420, 'firstcat', findFirstCat, this, 0, 0, 0);
+		
 		//ovencat
 		this.oventrigger = game.add.button(450, 200, 'oventrigger', openOven, this, 0, 0, 0);
 		
@@ -176,7 +196,9 @@ Play.prototype = {
 		
 		this.fishbowlCatTrigger = game.add.button(220, 0, 'trigger', fishbowlCatComing, this, 0, 0, 0);
 		
-		
+		//shadow and first cat
+		this.firstCat = game.add.button(150, 480, 'firstcat', findFirstCat, this, 0, 0, 0);
+		this.socket = game.add.button(50, 540, 'socket', turnOnLamp, this, 0,0,0);
 		
 	},
 	update: function() {
@@ -362,7 +384,9 @@ function fishbowlCatComing(){
 		this.fishbowlCatTrigger.destroy();
 		this.movingFishbowl.destroy();
 		this.backbar.destroy();
-		this.fishbowlCat = game.add.button(220, 0, 'fishbowlcat', pickFishbowlCat, this, 0, 0, 0);		
+		this.fishbowlCat = game.add.button(190, -10, 'fishbowlcat', pickFishbowlCat, this, 0, 0, 0);	
+		this.fishbowlCat.width = 154;
+		this.fishbowlCat.height = 70;
 	}
 	
 }
@@ -412,7 +436,7 @@ function openLampCabinet(){
 function pickLamp(){
 	lamppicked = true;
 	this.lamp.destroy();
-	this.lampItem = game.add.button(200 + 100* itemDistance, 550, 'lamp', usingLamp, this, 0, 0, 0);
+	this.lampItem = game.add.button(200 + 100* itemDistance, 530, 'lamp', usingLamp, this, 0, 0, 0);
 	this.lampItem.width = 120;
 	this.lampItem.height = 120;
 	lampPosition = itemDistance;
@@ -446,7 +470,9 @@ function returnLamp(){
 	lamping = false;
 	this.movingLamp.destroy();
 	this.backbar.destroy();
-	this.lampItem = game.add.button(200  + 100* lampPosition, 550, 'lamp', usingLamp, this,0, 0, 0);
+	this.lampItem = game.add.button(200  + 100* lampPosition, 530, 'lamp', usingLamp, this,0, 0, 0);
+	this.lampItem.width = 120;
+	this.lampItem.height = 120;
 }
 
 
@@ -454,10 +480,58 @@ function returnLamp(){
 
 
 function findFirstCat(){
-	this.Meow1.play();
-	this.firstcatinstru = game.add.text(100, 420, 'you find the cat', { fontSize: '32px', fill: '#000' });
+	if(shadowcatpicked == true){
+		this.Meow1.play();
+		scoreBarPlus();
+		this.firstCat.destroy();
+	}
+	//this.firstcatinstru = game.add.text(100, 420, 'you find the cat', { fontSize: '32px', fill: '#000' });
+}
+//打开台灯
+function turnOnLamp(){
+	if(lamping == true){
+		lamping = false
+		this.socket.destroy();
+		this.movingLamp.destroy();
+
+		this.lampSwitch = game.add.button(-50, 520, 'lampopen', turnOffLamp,this, 0, 0, 0);
+		this.lampSwitch.width = 300;
+		this.lampSwitch.height = 150;
+		if(shadowcatpicked == false){
+			this.shadowCat = game.add.button(160, 440, 'shadowcat', pickshadowCat, this, 0, 0, 0);
+			this.shadowCat.width = 300;
+			this.shadowCat.height = 150;
+		}
+		this.backbar.destroy();
+	}
 }
 
+function turnOffLamp(){
+	this.lampSwitch.destroy();
+	if(shadowcatpicked == false){	
+		this.shadowCat.destroy();
+	}
+	this.lampItem = game.add.button(200  + 100* lampPosition, 530, 'lamp', usingLamp, this,0, 0, 0);
+	this.lampItem.width = 120;
+	this.lampItem.height = 120;
+	this.socket = game.add.button(50, 540, 'socket', turnOnLamp, this, 0,0,0);
+}
+
+
+function pickshadowCat(){
+	if(shadowcatpicked == false){
+		this.shadowCat.destroy();
+		shadowcatpicked = true;
+		this.Meow1.play();
+		scoreBarPlus();
+		
+	}
+	
+}
+
+
+
+//打开烤箱
 function openOven(){
 
 	if(inBanana == false && inPipe == false && inStair == false && inPhone == false){//先判断是否在别的场景中以免穿模
@@ -467,18 +541,32 @@ function openOven(){
 		/*this.openedOven.width = 300;
 		this.openedOven.height = 200;*/
 		if(cupcakecatpicked == false){
-			this.cupcakecat = this.add.button(300, 200, 'cupcakecat', pickupcupcakecat, this, 0, 0, 0);
-			this.cupcakecat.width = 200;
-			this.cupcakecat.height = 200;
+			this.cream = game.add.button(350, 200, 'trigger', creamOut, this, 0, 0, 0);
+			this.cupcakecat = game.add.sprite(350, 200, 'creamcupcake');
+			this.cupcakecat.width = 180;
+			this.cupcakecat.height = 220;
+			this.cream.width = 180;
+			this.cream.height = 180;
 			console.log(cupcakecatpicked);
 		}
 	}
 	
 }
 
+function creamOut(){
+	this.cream.destroy();
+	this.cupcakecat.destroy();
+	this.cupcakecat = game.add.button(350, 220, 'cupcakecat', pickupcupcakecat, this,0, 0, 0 );
+	this.cupcakecat.width = 180;
+	this.cupcakecat.height = 210;
+	
+}
+
 function closeOven(){
 	this.openedOven.destroy();
 	this.cupcakecat.destroy();
+	this.cream.destroy();
+
 	inOven = false;//离开烤箱场景
 }
 
@@ -508,6 +596,7 @@ function pipeCatOut(){
 		this.pipeCat = this.add.sprite(0, 0, 'pipecat', 'pipecat1');
 		this.pipeCat.animations.add('flow', ['pipecat1', 'pipecat2', 'pipecat3'], 2, false);
 		this.pipeCat.animations.play('flow');
+		havePipeCat = true;
 		this.pickpipecat = this.add.button(375, 150, 'trigger', pickPipeCat, this, 0, 0, 0);
 		this.pickpipecat.width = 150;
 		this.pickpipecat.height = 600;
@@ -526,8 +615,12 @@ function pipesOut(){
 	this.pipe.destroy();
 	this.openpipe.destroy();
 	this.backFromPipe.destroy();
-	this.pipeCat.destroy();////////这里要修改修复BUG
-	this.pickpipecat.destroy();
+	if(havePipeCat == true){
+		this.pipeCat.destroy();////////这里要修改修复BUG
+		havePipeCat = false;
+		this.pickpipecat.destroy();
+	}
+	
 	inPipe = false;//离开pipe场景
 }
 
@@ -568,7 +661,9 @@ function phoneEvent(){
 	if(inOven == false && inBanana == false && inPipe == false && inStair == false){//判断是否在别的场景
 		inPhone = true;
 		console.log(inOven, inBanana, inPipe, inStair, inPhone);
+		if(longcatpicked == false){
 		this.catbackground = this.add.sprite(-600, 0, 'longcatphoto');
+		}
 		this.phone = this.add.sprite(0, 0, 'pano');
 		if(this.catbackground.x < 100)
 		{
@@ -579,9 +674,9 @@ function phoneEvent(){
 			this.game.inputEnabled = true;
 			//this.game.input.onHold.add(moveLeft, this);	
 		}
-		
+		}
 		this.backFromPhone = this.add.button(0, 0, 'back', phoneOut, this, 0, 0, 0);
-	}
+	
 }
 //左移
 function moveLeft(){
@@ -595,7 +690,7 @@ function moveLeft(){
 //退出phone场景，清空所有,出现长猫
 function phoneOut(){
 	inphone = false;//离开stair场景
-	if(this.catbackground.x >= 100)
+	if(this.catbackground.x >= 100 && longcatpicked == false)
 	{
 		this.longcat = this.add.button(450,350, 'longcat', picklongCat, this, 0, 0, 0);
 		this.longcat.anchor.set(0.5);
@@ -607,6 +702,7 @@ function phoneOut(){
 	this.catbackground.destroy();
 	this.phone.destroy();
 	this.backFromPhone.destroy();
+	inPhone = false;
 	
 }
 
@@ -658,7 +754,7 @@ function pickBananaCat(){
 
 
 // define game, add states, and start Preloader
-var game = new Phaser.Game(950, 620, Phaser.AUTO, 'phaser');//950, 620
+var game = new Phaser.Game(950, 800, Phaser.AUTO, 'phaser');//950, 620
 game.state.add('MainMenu', MainMenu);
 game.state.add('Play', Play);
 game.state.add('GameOver', GameOver);
