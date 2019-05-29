@@ -34,9 +34,14 @@ MainMenu.prototype = {
 	},
 	preload: function() {
 		// set load path and load assets
-		game.load.audio('bgm', 'assets/audio/bgm.mp3' );
+		game.load.audio('bgm', 'assets/audio/bgm.wav' );
 		game.load.audio('appear', 'assets/audio/appear.wav' );
 		game.load.audio('Meow1', 'assets/audio/catMeow.mp3')
+		game.load.audio('closeCloset', 'assets/audio/DoorClose.mp3');
+		game.load.audio('openCloset', 'assets/audio/DoorOpen.mp3');
+		game.load.audio('lampSound', 'assets/audio/openLamp.mp3');
+		game.load.audio('ovenSound', 'assets/audio/openOven.wav');
+		game.load.audio('stairCatSound', 'assets/audio/stairCat.mp3');
 		this.load.path = 'assets/img/';
 		this.load.atlas('atlas', 'atlassprites.png', 'atlassprites.json');
 		this.load.image('arrowKey', 'arrowKey.png');
@@ -71,7 +76,7 @@ MainMenu.prototype = {
 		this.load.image('longcatphoto', 'project/longCatPhoto.jpg');
 		this.load.image('longcat', 'project/longcatSprite.png');
 		this.load.image('shadowcat', 'project/shadowCat.PNG');
-		this.load.image('socket', 'project/cat.png');
+		this.load.image('socket', 'project/socket.png');
 		this.load.image('lampopen', 'project/lampOpen.png');
 		this.load.image('creamcupcake', 'project/creamcupcake.png');
 	},
@@ -129,6 +134,11 @@ Play.prototype = {
 		this.bgm.volume = 0.25;
 		this.appear = game.add.audio('appear');
 		this.Meow1 = game.add.audio('Meow1');
+		this.closeCloset = game.add.audio('closeCloset');
+		this.openCloset = game.add.audio('openCloset');
+		this.lampSound = game.add.audio('lampSound');
+		this.ovenSound = game.add.audio('ovenSound');
+		this.stairCatSound = game.add.audio('stairCatSound');
 		this.bgm.play();
 
 
@@ -153,11 +163,7 @@ Play.prototype = {
 		this.upKey = game.add.sprite(64, 32, 'arrowKey');
 		this.upKey.anchor.set(0.5);
 
-		// init debug toggle
-		this.debug = false;
-		this.scoreText = game.add.text(30, 50, 'Score: 0', { fontSize: '32px', fill: '#000' });
-		this.game.time.reset();
-
+		
 		scorebar = game.add.sprite(850, 100, 'scorebar', '1');
 
 		this.fishbowlCabinet = game.add.button(610, 150, 'trigger', openFishBowlCabinet, this, 0, 0, 0);
@@ -199,7 +205,10 @@ Play.prototype = {
 		
 		//shadow and first cat
 		this.firstCat = game.add.button(150, 480, 'firstcat', findFirstCat, this, 0, 0, 0);
-		this.socket = game.add.button(50, 540, 'socket', turnOnLamp, this, 0,0,0);
+		this.socket = game.add.button(20, 560, 'socket', turnOnLamp, this, 0,0,0);
+        this.socket.width = 30;
+        this.socket.height = 30;
+        
 		
 	},
 	update: function() {
@@ -226,10 +235,7 @@ Play.prototype = {
 	
 	
 	},
-	render: function() {
-
-		game.debug.text('Press \'T\' to toggle debug text', 32, game.height - 17);	
-	}
+	
 };
 
 // define GameOver state and methods
@@ -323,6 +329,7 @@ function scoreBarPlus(){
 
 //鱼缸柜子
 function openFishBowlCabinet(){
+	this.openCloset.play();
 	if(inOven == false && inPipe == false && inStair == false){
 		this.closefishbowl = game.add.button(490, 320, 'fishbowlcabinet', closeFishBowlCabinet, this, 0, 0, 0);
 		this.closefishbowl.anchor.set(0.5, 0.5);
@@ -350,6 +357,7 @@ function pickFishBowl(){
 function closeFishBowlCabinet(){
 	this.closefishbowl.destroy();
 	this.fishbowl.destroy();
+	this.closeCloset.play();
 	
 }
 //点击道具鱼缸
@@ -420,6 +428,7 @@ function pickSteamlCat(){
 
 //台灯柜子
 function openLampCabinet(){
+	this.openCloset.play();
 	if(inOven == false && inPipe == false && inStair == false){
 	this.closelampcabinet = game.add.button(750, 220, 'lampcabinet', closeLampCabinet, this, 0, 0, 0);
 	this.closelampcabinet.width = 75;
@@ -445,6 +454,7 @@ function pickLamp(){
 
 //关上台灯柜子
 function closeLampCabinet(){
+	this.closeCloset.play();
 	this.closelampcabinet.destroy();
 	this.lamp.destroy();
 }
@@ -491,10 +501,11 @@ function findFirstCat(){
 function turnOnLamp(){
 	if(lamping == true){
 		lamping = false
+		this.lampSound.play();
 		this.socket.destroy();
 		this.movingLamp.destroy();
 
-		this.lampSwitch = game.add.button(-50, 520, 'lampopen', turnOffLamp,this, 0, 0, 0);
+		this.lampSwitch = game.add.button(-20, 470, 'lampopen', turnOffLamp,this, 0, 0, 0);
 		this.lampSwitch.width = 300;
 		this.lampSwitch.height = 150;
 		if(shadowcatpicked == false){
@@ -514,7 +525,9 @@ function turnOffLamp(){
 	this.lampItem = game.add.button(200  + 100* lampPosition, 530, 'lamp', usingLamp, this,0, 0, 0);
 	this.lampItem.width = 120;
 	this.lampItem.height = 120;
-	this.socket = game.add.button(50, 540, 'socket', turnOnLamp, this, 0,0,0);
+	this.socket = game.add.button(20, 560, 'socket', turnOnLamp, this, 0,0,0);
+    this.socket.width = 30;
+    this.socket.height = 30;
 }
 
 
@@ -537,6 +550,7 @@ function openOven(){
 	if(inBanana == false && inPipe == false && inStair == false && inPhone == false){//先判断是否在别的场景中以免穿模
 		inOven = true;//在烤箱场景
 		console.log(inOven, inBanana, inPipe);
+		this.ovenSound.play();
 		this.openedOven = this.add.button(0, 0, 'openoven', closeOven, this, 0, 0, 0);
 		/*this.openedOven.width = 300;
 		this.openedOven.height = 200;*/
@@ -628,7 +642,7 @@ function pipesOut(){
 function stairEvent(){
 	if(inOven == false && inBanana == false && inPipe == false && inPhone == false){//判断是否在别的场景
 		inStair = true;
-		console.log(inOven, inBanana, inPipe, inStair)
+        console.log(inOven, inBanana, inPipe, inStair);
 		this.stair = this.add.sprite(0, 0, 'stair');
 		if(staircatpicked == false){
 		this.stairCatImage = this.add.sprite(0, 0, 'staircatImage');
@@ -637,11 +651,12 @@ function stairEvent(){
 		this.rollstaircat.width = 250;
 		this.rollstaircat.height = 300;
 		}
-	this.backFromStair = this.add.button(0, 0, 'back', stairOut, this, 0, 0, 0);
+        this.backFromStair = this.add.button(0, 0, 'back', stairOut, this, 0, 0, 0);
 	}
 }
 //点击滚动楼梯猫
 function rollingStairCat(){
+	this.stairCatSound.play();
 	this.stairCatImage.destroy();
 	this.rollstaircat.destroy();
 	this.backFromStair.destroy();
@@ -666,9 +681,9 @@ function pickStairCat(){
 function stairOut(){
 	this.stair.destroy();
 	this.stairCatImage.destroy();
+    this.rollstaircat.destroy();
 	this.backFromStair.destroy();
 	this.stairCat.destroy();////////这里要修改修复BUG
-
 	inStair = false;//离开stair场景
 }
 
@@ -770,7 +785,7 @@ function pickBananaCat(){
 
 
 // define game, add states, and start Preloader
-var game = new Phaser.Game(950, 800, Phaser.AUTO, 'phaser');//950, 620
+var game = new Phaser.Game(950, 620, Phaser.AUTO, 'phaser');//950, 620
 game.state.add('MainMenu', MainMenu);
 game.state.add('Play', Play);
 game.state.add('GameOver', GameOver);
