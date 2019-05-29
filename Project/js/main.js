@@ -90,8 +90,8 @@ MainMenu.prototype = {
 		
 		this.startSound = game.add.audio('appear');
 		this.title = this.add.sprite(0, 0, 'title');
-		this.title.width = 950;
-		this.title.height = 620;
+		this.title.width = 960;
+		this.title.height = 640;
 		this.startbutton = this.add.button(440, 565, 'startbutton', clickStart, this, 0, 0, 0 ); // 420, 350
 		
 		
@@ -225,8 +225,6 @@ Level1.prototype = {
 			
 		}
 	
-	
-	
 	},
 	
 };
@@ -240,6 +238,11 @@ Level2.prototype = {
 	create: function() {
 
 		this.background = this.add.sprite(0, 0, 'background2');
+		//this.background.anchor.set(0.5,0.5);
+		this.background.width = 960;
+		this.background.height = 640;
+
+		scorebar = game.add.sprite(850, 100, 'scorebar', '1');
 
 	},
 	update: function() {
