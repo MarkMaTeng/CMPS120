@@ -64,11 +64,11 @@ MainMenu.prototype = {
 		this.load.image('fishbowl', 'project/fishbowl.png');
 		this.load.image('fishbowlcabinet', 'project/fishbowlcabinet.png');
 		this.load.image('fishbowlcat', 'project/fishbowlcat.png');
-		this.load.image('iphone', 'project/cat.png');
 		this.load.image('lampcabinet', 'project/cat.png');
 		this.load.image('steamcat', 'project/steamcat.png');
 		this.load.image('itembar', 'platform.png');
 		this.load.image('stair', 'project/steps.png');
+		this.load.image('lyingcat', 'project/lyingcat.png');
 		this.load.atlas('staircat', 'project/stairStep.png', 'project/stairStep.json');
 		this.load.image('staircatImage', 'project/step1.PNG');
 		this.load.image('phone', 'project/cphone.png');
@@ -169,10 +169,10 @@ Play.prototype = {
 		this.fishbowlCabinet.width = 150;
 		this.fishbowlCabinet.height = 120;
 		
-		this.stairtrigger = game.add.button(0,200, 'trigger', stairEvent, this, 0, 0, 0);
+		this.stairtrigger = game.add.button(130,120, 'lyingcat', stairEvent, this, 0, 0, 0);
 		this.stairtrigger.anchor.set(0.5);
-		this.stairtrigger.width = 350;
-		this.stairtrigger.height = 400;
+		this.stairtrigger.width = 80;
+		this.stairtrigger.height = 80;
 
 		this.lampCabinet = game.add.button(750, 220, 'trigger', openLampCabinet, this, 0, 0, 0);
 		this.lampCabinet.width = 75;
@@ -642,7 +642,7 @@ function phoneEvent(){
 		this.phone = this.add.sprite(0, 0, 'pano');
 		if(this.catbackground.x < 100)
 		{
-			this.leftKey = this.add.button(320, 500, 'arrowKey', moveLeft,this,  0, 0, 0);
+			this.leftKey = this.add.button(315, 595, 'arrowKey', moveLeft,this,  0, 0, 0);
 			//this.leftKey = this.add.sprite(480, 500, 'arrowKey');
 			this.leftKey.anchor.set(0.5);
 			this.leftKey.rotation = Math.PI/2*3;
