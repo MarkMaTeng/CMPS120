@@ -620,6 +620,7 @@ function pickStairCat(){
 	staircatpicked = true;
 	this.stairCat.destroy();
 	this.pickstaircat.destroy();
+	this.stairtrigger.destroy();
 	scoreBarPlus();
 }
 //退出stair场景，清空所有
