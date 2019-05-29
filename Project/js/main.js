@@ -81,7 +81,6 @@ MainMenu.prototype = {
 		this.load.image('creamcupcake', 'project/creamcupcake.png');
 	},
 	create: function() {
-		initWordList();
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		
 		this.startSound = game.add.audio('appear');
@@ -258,60 +257,6 @@ GameOver.prototype = {
 }
 
 
-
-
-
-
-
-
-
-// this is simply here to avoid running out of words
-function initWordList() {
-	wordList = {};
-	wordList = {
-		adjectives: ['nervous', 'oceanic', 'fuzzy', 'sore', 'untidy', 'flowery', 'muddled', 'hellish', 'overwrought', 'abrupt', 'quixotic', 'grumpy', 'enormous', 'capable', 'roomy', 'tender', 'spiky', 'magenta', 'cute', 'dusty', 'hot', 'exultant', 'massive', 'lush', 'aromatic', 'solid', 'wrathful', 'dull', 'grey', 'likeable', 'narrow'],
-		nouns: ['fire', 'hydrant', 'spoon', 'frog', 'leg', 'person', 'baseball', 'ghost', 'ocean', 'stranger', 'bulb', 'string', 'government', 'bed', 'giraffe', 'smell', 'oven', 'vegetable', 'snail', 'parcel', 'wax', 'seashore', 'harmony', 'pie', 'crowd', 'toothbrush', 'sink', 'trees', 'cemetery', 'earth', 'sky', 'giants', 'apparatus', 'ladybug', 'machine', 'rabbits', 'hill', 'notebook', 'cabbage', 'car', 'trousers', 'bee'],
-		verbs: ['excused', 'carved', 'offended', 'sailed', 'destroyed', 'poured', 'disarmed', 'borrowed', 'expanded', 'burned', 'decorated', 'invented', 'recorded', 'boiled', 'crossed', 'squeezed', 'filmed', 'juggled', 'scratched', 'popped', 'milked', 'pined for', 'prayed for', 'painted', 'annoyed', 'delayed', 'supported', 'challenged'],
-		adverbs: ['fondly', 'sweetly', 'reluctantly', 'fatally', 'knowingly', 'greedily', 'rapidly', 'blissfully', 'successfully', 'politely', 'elegantly', 'youthfully', 'zestfully', 'busily', 'delightfully', 'gleefully', 'generously', 'helplessly', 'sheepishly', 'calmly', 'honestly', 'daintily', 'keenly', 'mostly', 'hungrily', 'shakily', 'worriedly', 'urgently', 'queasily', 'unnaturally', 'unexpectedly']
-	};
-}
-
-// this function adapted from Anatoliy's answer here:
-// https://stackoverflow.com/questions/1484506/random-color-generator
-function getRandomHexColor() {
-	let letters = '0123456789ABCDEF';
-	let hexColor = '#';
-	for(let i = 0; i < 6; i++) {
-		hexColor += letters[Math.floor(Math.random()*16)];
-	}
-	return hexColor;
-}
-
-// pass in an array of words, remove one at random, and optionally capitalize it
-// uppercase line from https://flaviocopes.com/how-to-uppercase-first-letter-javascript/
-function getRandomWord(list, cap) {
-	let word, seed;
-
-	if(list.length > 0) {
-		seed = Math.floor(Math.random()*list.length);
-		word = list[seed];
-		if(cap) { word = word.charAt(0).toUpperCase() + word.slice(1); }
-		list.splice(seed, 1);
-	} else {
-		word = "ERROR"; // not good error handling, but shut up :p
-	}
-	return word;
-}
-
-function printMessages(top_msg, btm_msg) {
-	let message = '';
-    let style1 = { font: '48px Helvetica', fill: '#FFF', align: "center" };
-    let style2 = { font: '22px Helvetica', fill: '#FFF', align: "center" };
-	message = game.add.text(50, game.world.centerY, top_msg, style1);
-	//message.anchor.set(0.5); // used for centering, but can make text blurry
-	message = game.add.text(50, game.world.centerY+64, btm_msg, style2);
-	//message.anchor.set(0.5);
-}
 
 function clickStart(){
 	this.startSound.play();
@@ -683,7 +628,6 @@ function stairOut(){
 	this.stairCatImage.destroy();
     this.rollstaircat.destroy();
 	this.backFromStair.destroy();
-	this.stairCat.destroy();////////这里要修改修复BUG
 	inStair = false;//离开stair场景
 }
 
