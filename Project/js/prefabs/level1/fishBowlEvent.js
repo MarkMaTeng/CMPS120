@@ -1,15 +1,16 @@
 
 //鱼缸柜子
 function openFishBowlCabinet(){
-	this.openCloset.play();
-	if(inOven == false && inPipe == false && inStair == false){
-		this.closefishbowl = game.add.button(490, 320, 'fishbowlcabinet', closeFishBowlCabinet, this, 0, 0, 0);
+
+	if(inOven == false && inPipe == false && inStair == false && lampCabinetOpen == false){
+		this.openCloset.play();
+		this.closefishbowl = game.add.button(682, 232, 'fishbowlcabinet', closeFishBowlCabinet, this, 0, 0, 0);
 		this.closefishbowl.anchor.set(0.5, 0.5);
-		this.closefishbowl.width = 930;
-		this.closefishbowl.height = 650;
+		this.closefishbowl.width = 300;
+		this.closefishbowl.height = 140;
 		
 		if(fishbowlpicked == false){
-			this.fishbowl = game.add.button(640,220, 'fishbowl', pickFishBowl, this, 0, 0, 0);
+			this.fishbowl = game.add.button(640,190, 'fishbowl', pickFishBowl, this, 0, 0, 0);
 			this.closefishbowl.anchor.set(0.5, 0.5);
 			this.fishbowl.width = 30;
 			this.fishbowl.height = 30;
@@ -20,7 +21,7 @@ function openFishBowlCabinet(){
 function pickFishBowl(){
 	fishbowlpicked = true;
 	this.fishbowl.destroy();
-	this.fishbowlItem = game.add.button(200  + 100* itemDistance , 550, 'fishbowl', usingFishBowl, this,0, 0, 0);
+	this.fishbowlItem = game.add.button( 130* itemDistance , 640, 'fishbowl', usingFishBowl, this,0, 0, 0);
 	fishbowlPosition = itemDistance;
 	itemDistance ++;
 }
@@ -42,8 +43,8 @@ function usingFishBowl(){
 		fishbowling = true;
 		
 		//var place = itemDistance;
-		this.backbar = game.add.button(200, 580, 'trigger', returnFishBowl, this, 0, 0, 0);
-		this.backbar.width = 600;
+		this.backbar = game.add.button(0, 640, 'trigger', returnFishBowl, this, 0, 0, 0);
+		this.backbar.width = 960;
 		this.backbar.height = 120;
 	}
 	
@@ -54,7 +55,7 @@ function returnFishBowl(){
 	fishbowling = false;
 	this.movingFishbowl.destroy();
 	this.backbar.destroy();
-	this.fishbowlItem = game.add.button(200  + 100* fishbowlPosition, 550, 'fishbowl', usingFishBowl, this,0, 0, 0);
+	this.fishbowlItem = game.add.button(130* fishbowlPosition, 640, 'fishbowl', usingFishBowl, this,0, 0, 0);
 }
 
 //鱼缸猫出现

@@ -4,11 +4,16 @@ var scorebar;
 
 
 //level 1
+var lampCabinetOpen = false;
 var inOven = false;
 var inPipe = false;
 var inBanana = false;
 var inStair = false;
 var inPhone =false;
+
+//level 2
+var readingSpaceReport = false;
+
 
 var inTree = false;
 
@@ -74,13 +79,13 @@ MainMenu.prototype = {
 		this.load.image('banana', 'level1/banana.png');
 		this.load.image('bananacat', 'level1/bananacat.png');
 		this.load.image('lamp', 'level1/lamp.png');
-		this.load.image('lampcabinet', 'level1/cat.png');
+		//this.load.image('lampcabinet', 'level1/cat.png');
 		this.load.image('fishbowl', 'level1/fishbowl.png');
 		this.load.image('fishbowlcabinet', 'level1/fishbowlcabinet.png');
 		this.load.image('fishbowlcat', 'level1/fishbowlcat.png');
-		this.load.image('lampcabinet', 'level1/cat.png');
+		this.load.image('lampcabinet', 'level1/lampCabinet.png');
 		this.load.image('steamcat', 'level1/steamcat.png');
-		this.load.image('itembar', 'platform.png');
+		//this.load.image('itembar', 'platform.png');
 		this.load.image('stair', 'level1/steps.png');
 		this.load.image('lyingcat', 'level1/lyingcat.png');
 		this.load.atlas('staircat', 'level1/stairStep.png', 'level1/stairStep.json');
@@ -93,7 +98,9 @@ MainMenu.prototype = {
 		this.load.image('socket', 'level1/socket.png');
 		this.load.image('lampopen', 'level1/lampOpen.png');
 		this.load.image('creamcupcake', 'level1/creamcupcake.png');
-
+		this.load.image('sinkcloset', 'level1/sinkcloset.png');
+		this.load.image('upcloset', 'level1/upCloset.png');
+		
 		// Level 2 img assets
 		this.load.image('background2', 'level2/bg.png');
 		this.load.image('crowcat', 'level2/crowCat.png');
@@ -102,7 +109,7 @@ MainMenu.prototype = {
 		this.load.image('bosscat', 'level2/bossCat.png');
 		this.load.image('chair1', 'level2/chair1.png');
 		this.load.image('chair2', 'level2/chair2.png');
-		
+		this.load.image('reportonspace', 'level2/reportOnSpace.png');
 
 	},
 	create: function() {
@@ -111,12 +118,12 @@ MainMenu.prototype = {
 		this.startSound = game.add.audio('appear');
 		this.title = this.add.sprite(0, 0, 'title');
 		this.title.width = 960;
-		this.title.height = 640;
-		this.startbutton = this.add.button(440, 565, 'startbutton', clickStart, this, 0, 0, 0 ); // 420, 350
+		this.title.height = 750;
+		this.startbutton = this.add.button(440, 680, 'startbutton', clickStart, this, 0, 0, 0 ); // 420, 350
 		
 		
 
-		this.mainMenuCat = this.add.sprite(420, 420, 'firstcat');
+		this.mainMenuCat = this.add.sprite(420, 520, 'firstcat');
 		this.mainMenuCat.anchor.set(0.5, 0.5);
 		this.physics.arcade.enable(this.mainMenuCat);
 		this.mainMenuCat.body.velocity.x = -200;
@@ -159,9 +166,9 @@ Level1.prototype = {
 		// add bg as tile sprite
 		
 		this.background = this.add.sprite(0, 0, 'background1');
-		this.itembar = this.add.sprite(200, 580, 'itembar');
+		/*this.itembar = this.add.sprite(200, 580, 'itembar');
 		this.itembar.width = 600;
-		this.itembar.height = 120;
+		this.itembar.height = 120;*/
 
 		// set up world physics
 		game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -222,6 +229,13 @@ Level1.prototype = {
         this.socket.width = 30;
         this.socket.height = 30;
         
+		this.sinkCloset = game.add.button(350, 200, 'trigger', openSinkCloset, this, 0, 0, 0);
+		this.sinkCloset.width = 100;
+		this.sinkCloset.height = 80;
+		
+		this.upCloset = game.add.button(600, 0, 'trigger', openUpCloset, this, 0, 0, 0);
+		this.upCloset.width = 150;
+		this.upCloset.height = 80;
 		
 	},
 	update: function() {
@@ -261,7 +275,7 @@ Level2.prototype = {
 		this.background = this.add.sprite(0, 0, 'background2');
 		//this.background.anchor.set(0.5,0.5);
 		this.background.width = 960;
-		this.background.height = 640;
+		this.background.height = 620;
 
 		scorebar = game.add.sprite(850, 100, 'scorebar', '1');
 		catFinded = 1;
@@ -275,7 +289,7 @@ Level2.prototype = {
 		this.tree.width = 300;
 		this.tree.height = 75;
 
-
+		this.reportOnSpace = game.add.button(520, 250, 'trigger', readReportOnSpace, this, 0, 0, 0);
 
 
 	},
@@ -325,7 +339,7 @@ function scoreBarPlus(){
 
 
 // define game, add states, and start Preloader
-var game = new Phaser.Game(960, 640, Phaser.AUTO, 'phaser');//950, 620
+var game = new Phaser.Game(960, 750, Phaser.AUTO, 'phaser');//950, 620
 game.state.add('MainMenu', MainMenu);
 game.state.add('Level1', Level1);
 game.state.add('Level2', Level2);

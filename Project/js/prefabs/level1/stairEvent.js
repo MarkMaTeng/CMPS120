@@ -4,11 +4,11 @@ function stairEvent(){
         console.log(inOven, inBanana, inPipe, inStair);
         this.stair = this.add.sprite(0, 0, 'stair');
         if(staircatpicked == false){
-        this.stairCatImage = this.add.sprite(0, 0, 'staircatImage');
-        this.rollstaircat = this.add.button(700, 100, 'trigger', rollingStairCat, this, 0, 0, 0);
-        this.rollstaircat.anchor.set(0.5);
-        this.rollstaircat.width = 250;
-        this.rollstaircat.height = 300;
+			this.stairCatImage = this.add.sprite(0, 0, 'staircatImage');
+			this.rollstaircat = this.add.button(700, 100, 'trigger', rollingStairCat, this, 0, 0, 0);
+			this.rollstaircat.anchor.set(0.5);
+			this.rollstaircat.width = 250;
+			this.rollstaircat.height = 300;
         }
         this.backFromStair = this.add.button(0, 0, 'back', stairOut, this, 0, 0, 0);
     }
@@ -30,7 +30,7 @@ function rollingStairCat(){
 }
 //抓stairCat
 function pickStairCat(){
-    this.Meow.play();
+    this.Meow1.play();
     staircatpicked = true;
     this.stairCat.destroy();
     this.pickstaircat.destroy();

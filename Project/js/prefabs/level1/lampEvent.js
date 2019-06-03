@@ -1,11 +1,13 @@
 
 //台灯柜子
 function openLampCabinet(){
-	this.openCloset.play();
+	
 	if(inOven == false && inPipe == false && inStair == false){
-	this.closelampcabinet = game.add.button(750, 220, 'lampcabinet', closeLampCabinet, this, 0, 0, 0);
-	this.closelampcabinet.width = 75;
-	this.closelampcabinet.height = 75;
+		this.openCloset.play();
+		lampCabinetOpen = true;
+		this.closelampcabinet = game.add.button(700, 208, 'lampcabinet', closeLampCabinet, this, 0, 0, 0);
+		this.closelampcabinet.width = 150;
+		this.closelampcabinet.height = 85;
 	
 	if(lamppicked == false){
 		this.lamp = game.add.button(800, 220, 'lamp', pickLamp, this, 0, 0, 0);
@@ -18,7 +20,7 @@ function openLampCabinet(){
 function pickLamp(){
 	lamppicked = true;
 	this.lamp.destroy();
-	this.lampItem = game.add.button(200 + 100* itemDistance, 530, 'lamp', usingLamp, this, 0, 0, 0);
+	this.lampItem = game.add.button(130* itemDistance, 640, 'lamp', usingLamp, this, 0, 0, 0);
 	this.lampItem.width = 120;
 	this.lampItem.height = 120;
 	lampPosition = itemDistance;
@@ -30,6 +32,7 @@ function closeLampCabinet(){
 	this.closeCloset.play();
 	this.closelampcabinet.destroy();
 	this.lamp.destroy();
+	lampCabinetOpen = false;
 }
 
 //点击道具台灯
@@ -43,8 +46,8 @@ function usingLamp(){
 		this.physics.arcade.enable(this.movingLamp);
 		lamping = true;
 		
-		this.backbar = game.add.button(200, 580, 'trigger', returnLamp, this, 0, 0, 0);
-		this.backbar.width = 600;
+		this.backbar = game.add.button(0, 640, 'trigger', returnLamp, this, 0, 0, 0);
+		this.backbar.width = 960;
 		this.backbar.height = 120;
 	}
 }
@@ -53,7 +56,7 @@ function returnLamp(){
 	lamping = false;
 	this.movingLamp.destroy();
 	this.backbar.destroy();
-	this.lampItem = game.add.button(200  + 100* lampPosition, 530, 'lamp', usingLamp, this,0, 0, 0);
+	this.lampItem = game.add.button(130* lampPosition, 640, 'lamp', usingLamp, this,0, 0, 0);
 	this.lampItem.width = 120;
 	this.lampItem.height = 120;
 }
