@@ -1,13 +1,20 @@
 
 var catFinded = 1;
 var scorebar;
+
+
+//level 1
 var inOven = false;
 var inPipe = false;
 var inBanana = false;
 var inStair = false;
 var inPhone =false;
+
+var inTree = false;
+
 var itemDistance = 0;
 
+//level 1
 var cupcakecatpicked = false;
 var pipecatpicked = false;
 var bananacatpicked = false;
@@ -18,6 +25,11 @@ var staircatpicked = false;
 var longcatpicked = false;
 var havePipeCat = false;
 var shadowcatpicked = false;
+
+
+//level 2
+var crowcatpicked = false;
+var bosscatpicked = false;
 
 var fishbowling = false;
 var lamping = false;
@@ -46,7 +58,7 @@ MainMenu.prototype = {
 
 		// Level 1 img assets
 		this.load.atlas('atlas', 'atlassprites.png', 'atlassprites.json');
-		this.load.image('arrowKey', 'arrowKey.png');
+		this.load.image('arrowKey', 'level1/arrowKey.png');
 		this.load.image('background1', 'level1/background.png');
 		this.load.image('title', 'level1/title.png');
 		this.load.image('startbutton', 'level1/oventrigger.png' );
@@ -84,6 +96,14 @@ MainMenu.prototype = {
 
 		// Level 2 img assets
 		this.load.image('background2', 'level2/bg.png');
+		this.load.image('crowcat', 'level2/crowCat.png');
+		this.load.image('crow1', 'level2/crow1.png');
+		this.load.image('crow2', 'level2/crow2.png');
+		this.load.image('bosscat', 'level2/bossCat.png');
+		this.load.image('chair1', 'level2/chair1.png');
+		this.load.image('chair2', 'level2/chair2.png');
+		
+
 	},
 	create: function() {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -234,6 +254,7 @@ var Level2 = function(game) {};
 Level2.prototype = {
 	init: function(score) {
 		this.score = score;
+		this.Meow1 = game.add.audio('Meow1');
 	},
 	create: function() {
 
@@ -243,6 +264,19 @@ Level2.prototype = {
 		this.background.height = 640;
 
 		scorebar = game.add.sprite(850, 100, 'scorebar', '1');
+		catFinded = 1;
+
+
+		this.bossChair = game.add.button(100, 350, 'chair1', bosscat, this, 0, 0, 0);
+		this.bossChair.width = 200;
+		this.bossChair.height = 250;
+
+		this.tree = game.add.button(540, 100, 'crow1', crowcat, this, 0, 0, 0);
+		this.tree.width = 300;
+		this.tree.height = 75;
+
+
+
 
 	},
 	update: function() {
@@ -283,6 +317,7 @@ function goLevel2(){
 function scoreBarPlus(){	
 	catFinded ++;
 	console.log(catFinded);
+
 	var scoreBarFrame = catFinded.toString();
 	scorebar.frameName = scoreBarFrame;
 }

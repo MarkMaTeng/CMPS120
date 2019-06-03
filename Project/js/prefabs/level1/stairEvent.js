@@ -30,7 +30,7 @@ function rollingStairCat(){
 }
 //抓stairCat
 function pickStairCat(){
-    this.Meow1.play();
+    this.Meow.play();
     staircatpicked = true;
     this.stairCat.destroy();
     this.pickstaircat.destroy();
