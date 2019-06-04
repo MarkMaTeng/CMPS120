@@ -85,9 +85,11 @@ function turnOnLamp(){
 		this.lampSwitch.width = 300;
 		this.lampSwitch.height = 150;
 		if(shadowcatpicked == false){
+			this.firstCat.destroy();
 			this.shadowCat = game.add.button(160, 440, 'shadowcat', pickshadowCat, this, 0, 0, 0);
 			this.shadowCat.width = 300;
 			this.shadowCat.height = 150;
+			this.firstCat = game.add.button(150, 480, 'firstcat', findFirstCat, this, 0, 0, 0);
 		}
 		this.backbar.destroy();
 	}

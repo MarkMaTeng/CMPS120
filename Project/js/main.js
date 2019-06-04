@@ -184,7 +184,7 @@ Level1.prototype = {
 		this.upKey.anchor.set(0.5);
 
 		
-		scorebar = game.add.sprite(850, 100, 'scorebar', '1');
+		scorebar = game.add.sprite(900, 150, 'scorebar', '1');
 
 		this.fishbowlCabinet = game.add.button(610, 150, 'trigger', openFishBowlCabinet, this, 0, 0, 0);
 		this.fishbowlCabinet.width = 150;
@@ -277,7 +277,7 @@ Level2.prototype = {
 		this.background.width = 960;
 		this.background.height = 620;
 
-		scorebar = game.add.sprite(850, 100, 'scorebar', '1');
+		scorebar = game.add.sprite(900, 150, 'scorebar', '1');
 		catFinded = 1;
 
 
@@ -285,9 +285,9 @@ Level2.prototype = {
 		this.bossChair.width = 200;
 		this.bossChair.height = 250;
 
-		this.tree = game.add.button(540, 100, 'crow1', crowcat, this, 0, 0, 0);
-		this.tree.width = 300;
-		this.tree.height = 75;
+		this.tree = game.add.button(660, 118, 'crow1', crowcat, this, 0, 0, 0);
+		this.tree.width = 150;
+		this.tree.height = 40;
 
 		this.reportOnSpace = game.add.button(520, 250, 'trigger', readReportOnSpace, this, 0, 0, 0);
 
