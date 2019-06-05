@@ -2,7 +2,7 @@
 
 //香蕉登场
 function bananaEvent(){
-	if(inOven == false && inPipe == false && inStair == false && inPhone == false ){//判断是否在别的场景
+	if(inOven == false && inPipe == false && inStair == false && inPhone == false && inBanana == false){//判断是否在别的场景
 		inBanana = true;
 		this.bananatrigger.destroy();
 		console.log(inOven, inBanana, inPipe);

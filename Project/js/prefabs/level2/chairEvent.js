@@ -1,6 +1,6 @@
 
 function bosscat(){
-	if(bosscatpicked == false){
+	if(bosscatpicked == false && readingSpaceReport == false && inTelescope == false && readingNotes == false){
 		this.bossChair.destroy();
 		this.bossChair = game.add.sprite(100, 350, 'chair2');
 		this.bossChair.width = 200;
@@ -19,3 +19,4 @@ function pickBossCat(){
 	scoreBarPlus();
 	
 }
+

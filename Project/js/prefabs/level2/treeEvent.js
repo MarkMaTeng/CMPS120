@@ -1,4 +1,3 @@
-
 function crowcat(){
 	if(crowcatpicked == false){
 		this.tree.destroy();

@@ -1,7 +1,7 @@
 
 var catFinded = 1;
 var scorebar;
-
+var spacePosition = 1;
 
 //level 1
 var lampCabinetOpen = false;
@@ -10,10 +10,12 @@ var inPipe = false;
 var inBanana = false;
 var inStair = false;
 var inPhone =false;
+var pipeAlreadyout = false;
 
 //level 2
 var readingSpaceReport = false;
-
+var readingNotes = false;
+var inTelescope = false;
 
 var inTree = false;
 
@@ -35,6 +37,10 @@ var shadowcatpicked = false;
 //level 2
 var crowcatpicked = false;
 var bosscatpicked = false;
+var blackholecatpicked = false;
+var spacecatpicked = false;
+var blackholecatexist = false;
+var spacecatexist = false;
 
 var fishbowling = false;
 var lamping = false;
@@ -62,6 +68,7 @@ MainMenu.prototype = {
 		this.load.path = 'assets/img/';
 
 		// Level 1 img assets
+		this.load.image('test', 'test.png');
 		this.load.atlas('atlas', 'atlassprites.png', 'atlassprites.json');
 		this.load.image('arrowKey', 'level1/arrowKey.png');
 		this.load.image('background1', 'level1/background.png');
@@ -100,6 +107,7 @@ MainMenu.prototype = {
 		this.load.image('creamcupcake', 'level1/creamcupcake.png');
 		this.load.image('sinkcloset', 'level1/sinkcloset.png');
 		this.load.image('upcloset', 'level1/upCloset.png');
+		this.load.image('fishbone', 'level1/fishBone.png');
 		
 		// Level 2 img assets
 		this.load.image('background2', 'level2/bg.png');
@@ -110,7 +118,10 @@ MainMenu.prototype = {
 		this.load.image('chair1', 'level2/chair1.png');
 		this.load.image('chair2', 'level2/chair2.png');
 		this.load.image('reportonspace', 'level2/reportOnSpace.png');
-
+		this.load.atlas('space', 'level2/space.png', 'level2/space.json');
+		this.load.image('plus', 'level2/plus.png');
+		this.load.image('minus', 'level2/minus.png');
+		this.load.image('notes', 'level2/notesOnComputer.png');
 	},
 	create: function() {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -184,7 +195,7 @@ Level1.prototype = {
 		this.upKey.anchor.set(0.5);
 
 		
-		scorebar = game.add.sprite(900, 150, 'scorebar', '1');
+		scorebar = game.add.sprite(850, 100, 'scorebar', '1');
 
 		this.fishbowlCabinet = game.add.button(610, 150, 'trigger', openFishBowlCabinet, this, 0, 0, 0);
 		this.fishbowlCabinet.width = 150;
@@ -217,10 +228,11 @@ Level1.prototype = {
 		this.pipetrigger.height = 75;
 		
 		//bananacat
-		this.bananatrigger = game.add.button(835, 2, 'trigger', bananaEvent, this, 0, 0, 0);
+		this.bananatrigger = game.add.button(835, 5, 'trigger', bananaEvent, this, 0, 0, 0);
 		this.bananatrigger.width = 50;
 		this.bananatrigger.height = 50;
 		
+		this.fishBone = this.add.sprite(210, 30, 'fishbone');
 		this.fishbowlCatTrigger = game.add.button(220, 0, 'trigger', fishbowlCatComing, this, 0, 0, 0);
 		
 		//shadow and first cat
@@ -277,7 +289,7 @@ Level2.prototype = {
 		this.background.width = 960;
 		this.background.height = 620;
 
-		scorebar = game.add.sprite(900, 150, 'scorebar', '1');
+		scorebar = game.add.sprite(850, 100, 'scorebar', '1');
 		catFinded = 1;
 
 
@@ -285,13 +297,18 @@ Level2.prototype = {
 		this.bossChair.width = 200;
 		this.bossChair.height = 250;
 
-		this.tree = game.add.button(660, 118, 'crow1', crowcat, this, 0, 0, 0);
-		this.tree.width = 150;
-		this.tree.height = 40;
+		this.tree = game.add.button(540, 100, 'crow1', crowcat, this, 0, 0, 0);
+		this.tree.width = 300;
+		this.tree.height = 75;
 
 		this.reportOnSpace = game.add.button(520, 250, 'trigger', readReportOnSpace, this, 0, 0, 0);
-
-
+		this.reportOnComputer = game.add.button(870, 250, 'trigger', readNotes, this, 0, 0, 0);
+		this.reportOnComputer.width = 35;
+		this.reportOnComputer.height = 40;
+		
+		this.telescope = game.add.button(235, 190, 'trigger', watchingBlackhole, this, 0, 0, 0);
+		this.telescope.width = 75;
+		this.telescope.height = 50;
 	},
 	update: function() {
 		

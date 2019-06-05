@@ -10,9 +10,9 @@ function openLampCabinet(){
 		this.closelampcabinet.height = 85;
 	
 	if(lamppicked == false){
-		this.lamp = game.add.button(800, 220, 'lamp', pickLamp, this, 0, 0, 0);
-		this.lamp.width = 50;
-		this.lamp.height = 50;
+		this.lamp = game.add.button(760, 215, 'lamp', pickLamp, this, 0, 0, 0);
+		this.lamp.width = 75;
+		this.lamp.height = 75;
 		}	
 	}
 }
@@ -81,9 +81,9 @@ function turnOnLamp(){
 		this.socket.destroy();
 		this.movingLamp.destroy();
 
-		this.lampSwitch = game.add.button(-20, 470, 'lampopen', turnOffLamp,this, 0, 0, 0);
+		this.lampSwitch = game.add.button(0, 460, 'lampopen', turnOffLamp,this, 0, 0, 0);//490
 		this.lampSwitch.width = 300;
-		this.lampSwitch.height = 150;
+		this.lampSwitch.height = 200;//150
 		if(shadowcatpicked == false){
 			this.firstCat.destroy();
 			this.shadowCat = game.add.button(160, 440, 'shadowcat', pickshadowCat, this, 0, 0, 0);
@@ -100,7 +100,7 @@ function turnOffLamp(){
 	if(shadowcatpicked == false){	
 		this.shadowCat.destroy();
 	}
-	this.lampItem = game.add.button(200  + 100* lampPosition, 530, 'lamp', usingLamp, this,0, 0, 0);
+	this.lampItem = game.add.button(130* lampPosition, 640, 'lamp', usingLamp, this,0, 0, 0);
 	this.lampItem.width = 120;
 	this.lampItem.height = 120;
 	this.socket = game.add.button(20, 560, 'socket', turnOnLamp, this, 0,0,0);

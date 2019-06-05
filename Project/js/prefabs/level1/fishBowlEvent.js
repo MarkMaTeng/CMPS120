@@ -10,10 +10,10 @@ function openFishBowlCabinet(){
 		this.closefishbowl.height = 140;
 		
 		if(fishbowlpicked == false){
-			this.fishbowl = game.add.button(640,190, 'fishbowl', pickFishBowl, this, 0, 0, 0);
+			this.fishbowl = game.add.button(640,180, 'fishbowl', pickFishBowl, this, 0, 0, 0);
 			this.closefishbowl.anchor.set(0.5, 0.5);
-			this.fishbowl.width = 30;
-			this.fishbowl.height = 30;
+			this.fishbowl.width = 60;
+			this.fishbowl.height = 60;
 		}
 	}
 }
@@ -62,6 +62,7 @@ function returnFishBowl(){
 function fishbowlCatComing(){
 	if(fishbowling == true){
 		fishbowling = false;
+		this.fishBone.destroy();
 		this.fishbowlCatTrigger.destroy();
 		this.movingFishbowl.destroy();
 		this.backbar.destroy();
