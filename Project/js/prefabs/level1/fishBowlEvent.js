@@ -76,7 +76,7 @@ function fishbowlCatComing(){
 //收集鱼缸猫
 function pickFishbowlCat(){
 	this.fishbowlCat.destroy();
-	this.Meow1.play();
+	meow();
 	scoreBarPlus();
 	
 }

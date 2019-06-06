@@ -30,7 +30,7 @@ function rollingStairCat(){
 }
 //抓stairCat
 function pickStairCat(){
-    this.Meow1.play();
+    meow();
     staircatpicked = true;
     this.stairCat.destroy();
     this.pickstaircat.destroy();
@@ -45,3 +45,4 @@ function stairOut(){
     this.backFromStair.destroy();
     inStair = false;//离开stair场景
 }
+

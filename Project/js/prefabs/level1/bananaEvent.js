@@ -28,7 +28,7 @@ function openBanana(){
 }
 
 function pickBananaCat(){
-	this.Meow1.play();
+	meow();
 	this.bananaCatOut.destroy();
 	bananacatpicked = true;
 	scoreBarPlus();

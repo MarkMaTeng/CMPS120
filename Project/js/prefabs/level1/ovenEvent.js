@@ -40,7 +40,7 @@ function closeOven(){
 }
 
 function pickupcupcakecat(){
-	this.Meow1.play();
+	meow();
 	cupcakecatpicked = true;
 	this.cupcakecat.destroy();
 	scoreBarPlus();

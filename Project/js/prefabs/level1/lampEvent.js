@@ -113,7 +113,7 @@ function pickshadowCat(){
 	if(shadowcatpicked == false){
 		this.shadowCat.destroy();
 		shadowcatpicked = true;
-		this.Meow1.play();
+		meow();
 		scoreBarPlus();
 		
 	}

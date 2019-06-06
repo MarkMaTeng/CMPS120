@@ -12,7 +12,7 @@ function steamcat(){
 function pickSteamCat(){
 
 	this.steamPot.destroy();
-	this.Meow1.play();
+	meow();
 	scoreBarPlus();
 	
 }

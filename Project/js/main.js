@@ -1,52 +1,4 @@
 
-var catFinded = 1;
-var scorebar;
-var spacePosition = 1;
-
-//level 1
-var lampCabinetOpen = false;
-var inOven = false;
-var inPipe = false;
-var inBanana = false;
-var inStair = false;
-var inPhone =false;
-var pipeAlreadyout = false;
-
-//level 2
-var readingSpaceReport = false;
-var readingNotes = false;
-var inTelescope = false;
-
-var inTree = false;
-
-var itemDistance = 0;
-
-//level 1
-var cupcakecatpicked = false;
-var pipecatpicked = false;
-var bananacatpicked = false;
-var fishbowlpicked = false;
-var lamppicked = false;
-var steamcatpicked = false;
-var staircatpicked = false;
-var longcatpicked = false;
-var havePipeCat = false;
-var shadowcatpicked = false;
-
-
-//level 2
-var crowcatpicked = false;
-var bosscatpicked = false;
-var blackholecatpicked = false;
-var spacecatpicked = false;
-var blackholecatexist = false;
-var spacecatexist = false;
-
-var fishbowling = false;
-var lamping = false;
-
-var fishbowlPosition;
-var lampPosition;
 
 
 var MainMenu = function(game) {};
@@ -59,7 +11,9 @@ MainMenu.prototype = {
 		// set load path and load assets
 		game.load.audio('bgm', 'assets/audio/bgm.wav' );
 		game.load.audio('appear', 'assets/audio/appear.wav' );
-		game.load.audio('Meow1', 'assets/audio/catMeow.mp3')
+		game.load.audio('Meow1', 'assets/audio/meow1.mp3')
+		game.load.audio('Meow2', 'assets/audio/meow2.mp3')
+		game.load.audio('Meow3', 'assets/audio/meow3.mp3')
 		game.load.audio('closeCloset', 'assets/audio/DoorClose.mp3');
 		game.load.audio('openCloset', 'assets/audio/DoorOpen.mp3');
 		game.load.audio('lampSound', 'assets/audio/openLamp.mp3');
@@ -167,6 +121,8 @@ Level1.prototype = {
 		this.bgm.volume = 0.25;
 		this.appear = game.add.audio('appear');
 		this.Meow1 = game.add.audio('Meow1');
+		this.Meow2 = game.add.audio('Meow2');
+		this.Meow3 = game.add.audio('Meow3');
 		this.closeCloset = game.add.audio('closeCloset');
 		this.openCloset = game.add.audio('openCloset');
 		this.lampSound = game.add.audio('lampSound');
@@ -281,6 +237,8 @@ Level2.prototype = {
 	init: function(score) {
 		this.score = score;
 		this.Meow1 = game.add.audio('Meow1');
+		this.Meow2 = game.add.audio('Meow2');
+		this.Meow3 = game.add.audio('Meow3');
 	},
 	create: function() {
 
@@ -353,6 +311,22 @@ function scoreBarPlus(){
 	scorebar.frameName = scoreBarFrame;
 }
 
+function meow(){
+	this.Meow1 = game.add.audio('Meow1');
+	this.Meow2 = game.add.audio('Meow2');
+	this.Meow3 = game.add.audio('Meow3');
+	switch(this.game.rnd.integerInRange(1, 3)){
+        case 1:
+            this.Meow1.play();
+            break;
+        case 2:
+            this.Meow2.play();
+            break;
+        case 3:
+            this.Meow3.play();
+            break;
+    }
+}
 
 
 // define game, add states, and start Preloader

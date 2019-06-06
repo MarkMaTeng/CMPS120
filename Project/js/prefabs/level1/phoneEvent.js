@@ -50,7 +50,7 @@ function phoneOut(){
 
 //抓长猫
 function picklongCat(){
-	this.Meow1.play();
+	meow();
 	longcatpicked = true;
 	this.longcat.destroy();
 	scoreBarPlus();

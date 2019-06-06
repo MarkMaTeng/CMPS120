@@ -26,7 +26,7 @@ function pipeCatOut(){
 }
 //抓pipecat
 function pickPipeCat(){
-	this.Meow1.play();
+	meow();
 	pipecatpicked = true;
 	this.pipeCat.destroy();
 	this.pickpipecat.destroy();
