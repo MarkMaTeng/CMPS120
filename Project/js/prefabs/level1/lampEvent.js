@@ -67,7 +67,7 @@ function returnLamp(){
 
 function findFirstCat(){
 	if(shadowcatpicked == true){
-		this.Meow1.play();
+		meow();
 		scoreBarPlus();
 		this.firstCat.destroy();
 	}

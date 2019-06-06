@@ -29,11 +29,16 @@ MainMenu.prototype = {
 		this.load.image('title', 'level1/title.png');
 		this.load.image('startbutton', 'level1/oventrigger.png' );
 		this.load.image('firstcat', 'level1/cat.png' );
-		this.load.image('openoven', 'level1/openoven.png');
+		
 		this.load.atlas('pipecat', 'level1/pipecat.png', 'level1/pipecat.json');
 		this.load.atlas('scorebar', 'level1/scorebar.png', 'level1/scorebar.json');
+
+		this.load.image('openoven', 'level1/openoven.png');
+		this.load.image('creamcupcake', 'level1/creamcupcake.png');
 		this.load.image('cupcakecat', 'level1/cupcakecat.png');
+		this.load.image('cupcake', 'level1/cupcake.png');
 		this.load.image('oventrigger', 'level1/oventrigger.png');
+
 		this.load.image('pipe', 'level1/pipe.png');
 		this.load.image('trigger', 'level1/oventrigger.png' );//oventrigger.png
 		this.load.image('back', 'level1/back.png');
@@ -58,7 +63,7 @@ MainMenu.prototype = {
 		this.load.image('shadowcat', 'level1/shadowCat.PNG');
 		this.load.image('socket', 'level1/socket.png');
 		this.load.image('lampopen', 'level1/lampOpen.png');
-		this.load.image('creamcupcake', 'level1/creamcupcake.png');
+		
 		this.load.image('sinkcloset', 'level1/sinkcloset.png');
 		this.load.image('upcloset', 'level1/upCloset.png');
 		this.load.image('fishbone', 'level1/fishBone.png');
