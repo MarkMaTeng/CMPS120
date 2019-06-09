@@ -21,12 +21,19 @@ MainMenu.prototype = {
 		game.load.audio('stairCatSound', 'assets/audio/stairCat.mp3');
 		this.load.path = 'assets/img/';
 
+
+		////////////////////////
+		// Beginning img assets //
+		////////////////////////
+		this.load.image('title', 'title.png');
+		this.load.image('intro', 'intro.png');
+
+
 		////////////////////////
 		// Level 1 img assets //
 		////////////////////////
 		this.load.image('arrowKey', 'level1/arrowKey.png');
 		this.load.image('background1', 'level1/background.png');
-		this.load.image('title', 'level1/title.png');
 		this.load.image('startbutton', 'level1/oventrigger.png' );
 		this.load.image('firstcat', 'level1/cat.png' );
 		this.load.atlas('scorebar', 'level1/scorebar.png', 'level1/scorebar.json');
@@ -115,7 +122,28 @@ MainMenu.prototype = {
 	}
 }
 
+// Intro state
+var Intro = function(game) {};
+Intro.prototype = {
+	init: function(score) {
 
+		this.Meow1 = game.add.audio('Meow1');
+		this.Meow2 = game.add.audio('Meow2');
+		this.Meow3 = game.add.audio('Meow3');
+	},
+	create: function() {
+
+		this.background = this.add.sprite(0, 0, 'intro');
+
+		this.startbutton = this.add.button(720, 450, 'startbutton', goLevel1, this, 0, 0, 0 ); 
+		this.startbutton.width = 200;
+		this.startbutton.height = 150;
+
+	},
+	update: function() {
+		
+	}
+}
 
 // Level1 state
 var Level1 = function() {};
@@ -307,12 +335,17 @@ GameOver.prototype = {
 
 function clickStart(){
 	this.startSound.play();
-	game.state.start('Level1', true, false, this.level, this.life);
+	game.state.start('Intro', true, false);
+	
+}
+
+function goLevel1(){
+	game.state.start('Level1', true, false);
 	
 }
 
 function goLevel2(){
-	game.state.start('Level2', true, false, this.level, this.life);
+	game.state.start('Level2', true, false);
 }
 
 //分数条进度
@@ -345,6 +378,7 @@ function meow(){
 // define game, add states, and start Preloader
 var game = new Phaser.Game(960, 750, Phaser.AUTO, 'phaser');//950, 620
 game.state.add('MainMenu', MainMenu);
+game.state.add('Intro', Intro);
 game.state.add('Level1', Level1);
 game.state.add('Level2', Level2);
 game.state.add('GameOver', GameOver);
