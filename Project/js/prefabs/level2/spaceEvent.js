@@ -31,7 +31,7 @@ function spacePlus(){
 		var spaceFrame = 'space' + spacePosition.toString();
 		this.space.frameName = spaceFrame;
 		if(spacePosition == 2 && blackholecatpicked == false){
-			console.log("aaaaaaaaaaaaa");
+			
 			this.blackholeCat = this.add.button(180, 75, 'trigger', pickBlackholeCat, this, 0, 0, 0);
 			this.blackholeCat.width = 600;
 			this.blackholeCat.height = 600;
@@ -39,6 +39,7 @@ function spacePlus(){
 		}
 		
 		if(spacePosition == 5 && spacecatpicked == false){
+			spacecatpicked = true;
 			this.spaceCat = this.add.button(180, 75, 'trigger', pickSpaceCat, this, 0, 0, 0);
 			this.spaceCat.width = 600;
 			this.spaceCat.height = 600;
@@ -52,7 +53,10 @@ function spacePlus(){
 			blackholecatexist = false;
 		}
 	}
-		
+	this.space.width = 960;
+	this.space.height = 750;
+	console.log(this.space.width);	
+	console.log(this.space.height);	
 }
 
 function spaceMinus(){
@@ -79,7 +83,10 @@ function spaceMinus(){
 		}
 		
 	}
-	
+	this.space.width = 960;
+	this.space.height = 750;
+	console.log(this.space.width);	
+	console.log(this.space.height);	
 }
 
 function pickBlackholeCat(){
@@ -109,5 +116,7 @@ function backFromSpace(){
 	this.space.destroy();
 	this.plus.destroy();
 	this.minus.destroy();
+	this.back.destroy();
+	spacePosition = 1
 	inTelescope = false
 }

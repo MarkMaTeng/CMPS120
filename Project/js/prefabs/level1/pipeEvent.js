@@ -34,6 +34,7 @@ function pickPipeCat(){
 }
 //退出pipe场景，清空所有
 function pipesOut(){
+	console.log('nimade');
 	this.pipe.destroy();
 	this.openpipe.destroy();
 	this.backFromPipe.destroy();
@@ -44,4 +45,5 @@ function pipesOut(){
 	}
 	
 	inPipe = false;//离开pipe场景
+	console.log(inPipe);
 }

@@ -45,9 +45,19 @@ var blackholecatexist = false;
 var spacecatexist = false;
 var microcatpicked = false;
 
+var tComplete = false;
+var cComplete = false;
+
 var fishbowling = false;
 var lamping = false;
 var bactoriaing = false;
+var teaing = false;
+var co3ing = false;
+var so4ing = false;
 
 var fishbowlPosition;
 var lampPosition;
+var teaPosition;
+var co3Position;
+var so4Position;
+var bactoriaPosition;

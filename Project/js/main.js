@@ -19,7 +19,7 @@ MainMenu.prototype = {
 		game.load.audio('stairCatSound', 'assets/audio/stairCat.mp3');
 		this.load.path = 'assets/img/';
 
-
+		this.load.image('test', 'test.png');
 		////////////////////////
 		// Beginning img assets //
 		////////////////////////
@@ -106,6 +106,11 @@ MainMenu.prototype = {
 		this.load.atlas('micro', 'level2/micro.png', 'level2/micro.json');
 		this.load.image('bactoria', 'level2/bacteria.png');
 		this.load.atlas('glass', 'level2/glass.png', 'level2/glass.json');
+		this.load.image('tea', 'level2/tea.png');
+		this.load.image('so4', 'level2/so4.png');
+		this.load.image('co3', 'level2/co3.png');
+		this.load.image('c', 'level2/c.png');
+		this.load.image('t', 'level2/t.png');
 	},
 	create: function() {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -312,18 +317,55 @@ Level2.prototype = {
 		
 		//显微镜
 		this.glass = this.add.sprite(640, 230, 'glass', 'glass1');
-		this.pickGlass = game.add.button(640, 250, 'trigger', pickUpGlass, this, 0, 0, 0);
-		this.micro = game.add.button(770, 250, 'trigger', goToMicro, this, 0, 0, 0 );
+		this.pickGlass = game.add.button(650, 240, 'trigger', pickUpGlass, this, 0, 0, 0);
+		this.pickGlass.width = 35;
+		this.pickGlass.height = 35;
+		this.micro = game.add.button(770, 150, 'trigger', goToMicro, this, 0, 0, 0 );
+		this.micro.width = 50;
+		this.micro.height = 50;
+		//电脑
+		this.monitor = this.add.button(30, 175, 'trigger', unlockComputer, this, 0, 0, 0);
+		this.monitor.width = 115;
+		this.monitor.height = 60;
+		this.tea = this.add.button(700, 200, 'tea', pickUpTea, this, 0, 0, 0);
+		this.co3 = this.add.button(850, 200, 'co3', pickCo3, this, 0, 0, 0);
+		this.so4 = this.add.button(900, 200, 'so4', pickSo4, this, 0, 0, 0);
 	},
 	update: function() {
 		if(bactoriaing == true){
 			this.physics.arcade.moveToPointer(this.movingBactoria, 3000);
 			if(Phaser.Rectangle.contains(this.movingBactoria.body, this.input.x, this.input.y)){
 				this.movingBactoria.body.velocity.setTo(0, 0);
-		}
+			}
 			
-		
 		}
+	
+		if(teaing == true){
+			this.physics.arcade.moveToPointer(this.movingTea, 3000);
+			if(Phaser.Rectangle.contains(this.movingTea.body, this.input.x, this.input.y)){
+				this.movingTea.body.velocity.setTo(0, 0);
+			}
+			
+		}		
+		
+		if(co3ing == true){
+			this.physics.arcade.moveToPointer(this.movingCo3, 3000);
+			if(Phaser.Rectangle.contains(this.movingCo3.body, this.input.x, this.input.y)){
+				this.movingCo3.body.velocity.setTo(0, 0);
+			}
+			
+		}	
+		
+		if(so4ing == true){
+			this.physics.arcade.moveToPointer(this.movingSo4, 3000);
+			if(Phaser.Rectangle.contains(this.movingSo4.body, this.input.x, this.input.y)){
+				this.movingSo4.body.velocity.setTo(0, 0);
+			}
+			
+		}	
+
+		
+		
 	}
 }
 
