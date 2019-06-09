@@ -7,16 +7,17 @@ MainMenu.prototype = {
 	},
 	preload: function() {
 		// set load path and load assets
-		game.load.audio('bgm', 'assets/audio/bgm.wav' );
-		game.load.audio('appear', 'assets/audio/appear.wav' );
-		game.load.audio('Meow1', 'assets/audio/meow1.mp3')
-		game.load.audio('Meow2', 'assets/audio/meow2.mp3')
-		game.load.audio('Meow3', 'assets/audio/meow3.mp3')
-		game.load.audio('closeCloset', 'assets/audio/DoorClose.mp3');
-		game.load.audio('openCloset', 'assets/audio/DoorOpen.mp3');
-		game.load.audio('lampSound', 'assets/audio/openLamp.mp3');
-		game.load.audio('ovenSound', 'assets/audio/openOven.wav');
-		game.load.audio('stairCatSound', 'assets/audio/stairCat.mp3');
+		this.load.path = 'assets/audio/';
+		game.load.audio('bgm', 'bgm.wav' );
+		game.load.audio('appear', 'appear.wav' );
+		game.load.audio('Meow1', 'meow1.mp3')
+		game.load.audio('Meow2', 'meow2.mp3')
+		game.load.audio('Meow3', 'meow3.mp3')
+		game.load.audio('closeCloset', 'DoorClose.mp3');
+		game.load.audio('openCloset', 'DoorOpen.mp3');
+		game.load.audio('lampSound', 'openLamp.mp3');
+		game.load.audio('ovenSound', 'openOven.wav');
+		game.load.audio('stairCatSound', 'stairCat.mp3');
 		this.load.path = 'assets/img/';
 
 		this.load.image('test', 'test.png');
@@ -187,7 +188,9 @@ Level1.prototype = {
 		
 		/*this.itemInUse = game.add.group();
 		this.physics.arcade.enable(this.itemInUse);*/
-
+		this.restart = this.add.button(930,720, 'firstcat', restart, this, 0, 0, 0);
+		this.restart.width = 50;
+		this.restart.height = 50;
 		
 		// add arrows
 		this.upKey = game.add.button(64, 32, 'arrowKey', goLevel2, this, 0, 0, 0);
@@ -290,8 +293,10 @@ Level2.prototype = {
 
 		this.background = this.add.sprite(0, 0, 'background2');
 		//this.background.anchor.set(0.5,0.5);
-		this.background.width = 960;
-		this.background.height = 620;
+
+		this.restart = this.add.button(930,720, 'firstcat', restart, this, 0, 0, 0);
+		this.restart.width = 50;
+		this.restart.height = 50;
 
 		scorebar = game.add.sprite(0, 0, 'scorebar', '1');
 
@@ -323,6 +328,7 @@ Level2.prototype = {
 		this.micro = game.add.button(770, 150, 'trigger', goToMicro, this, 0, 0, 0 );
 		this.micro.width = 50;
 		this.micro.height = 50;
+
 		//电脑
 		this.monitor = this.add.button(30, 175, 'trigger', unlockComputer, this, 0, 0, 0);
 		this.monitor.width = 115;
@@ -396,6 +402,11 @@ function clickStart(){
 
 function goLevel1(){
 	game.state.start('Level1', true, false);
+	
+}
+
+function restart(){
+	game.state.start('MainMenu', true, false);
 	
 }
 

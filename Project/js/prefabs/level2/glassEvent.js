@@ -1,7 +1,8 @@
 function pickUpGlass(){
 	this.glass.frameName = 'glass2';
 	this.pickGlass.destroy();
-	this.bactoria = this.add.button(130*itemDistance, 640, 'bactoria', usingBactoria, this, 0, 0, 0);
+	this.bactoria = this.add.button(150*itemDistance, 700, 'bactoria', usingBactoria, this, 0, 0, 0);
+	this.bactoria.anchor.set(0.5);
 	this.bactoria.width = 80;
 	this.bactoria.height = 80;
 	bactoriaPosition = itemDistance;
