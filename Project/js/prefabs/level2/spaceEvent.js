@@ -1,5 +1,5 @@
 function readReportOnSpace(){
-	if(readingSpaceReport == false && inTelescope == false && readingNotes == false){
+	if(readingSpaceReport == false && inTelescope == false && readingNotes == false && inMicro == false){
 		readingSpaceReport = true;
 		this.spaceReport = this.add.button(0, 0, 'reportonspace', finishReadSpaceRepory, this, 0, 0, 0);
 	}
@@ -13,7 +13,7 @@ function finishReadSpaceRepory(){
 
 
 function watchingBlackhole(){
-	if(readingSpaceReport == false && inTelescope == false && readingNotes == false){
+	if(readingSpaceReport == false && inTelescope == false && readingNotes == false && inMicro == false){
 		inTelescope = true;
 		this.space = this.add.sprite(0, 0, 'space', 'space1');
 		this.space.width = 960;

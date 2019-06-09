@@ -1,5 +1,5 @@
 function crowcat(){
-	if(crowcatpicked == false){
+	if(crowcatpicked == false && readingSpaceReport == false && inTelescope == false && readingNotes == false && inMicro == false){
 		this.tree.destroy();
 		this.tree = game.add.sprite(570, 80, 'crow2');
 		this.tree.width = 300;

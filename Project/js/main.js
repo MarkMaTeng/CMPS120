@@ -1,6 +1,4 @@
 
-
-
 var MainMenu = function(game) {};
 MainMenu.prototype = {
 	init: function() {
@@ -105,6 +103,9 @@ MainMenu.prototype = {
 		this.load.image('plus', 'level2/plus.png');
 		this.load.image('minus', 'level2/minus.png');
 		this.load.image('notes', 'level2/notesOnComputer.png');
+		this.load.atlas('micro', 'level2/micro.png', 'level2/micro.json');
+		this.load.image('bactoria', 'level2/bacteria.png');
+		this.load.atlas('glass', 'level2/glass.png', 'level2/glass.json');
 	},
 	create: function() {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -308,9 +309,21 @@ Level2.prototype = {
 		this.telescope = game.add.button(235, 190, 'trigger', watchingBlackhole, this, 0, 0, 0);
 		this.telescope.width = 75;
 		this.telescope.height = 50;
+		
+		//显微镜
+		this.glass = this.add.sprite(640, 230, 'glass', 'glass1');
+		this.pickGlass = game.add.button(640, 250, 'trigger', pickUpGlass, this, 0, 0, 0);
+		this.micro = game.add.button(770, 250, 'trigger', goToMicro, this, 0, 0, 0 );
 	},
 	update: function() {
+		if(bactoriaing == true){
+			this.physics.arcade.moveToPointer(this.movingBactoria, 3000);
+			if(Phaser.Rectangle.contains(this.movingBactoria.body, this.input.x, this.input.y)){
+				this.movingBactoria.body.velocity.setTo(0, 0);
+		}
+			
 		
+		}
 	}
 }
 

@@ -16,6 +16,8 @@ var readingSpaceReport = false;
 var readingNotes = false;
 var inTelescope = false;
 var inTree = false;
+var inMicro = false;
+
 
 var itemDistance = 0;
 
@@ -41,9 +43,11 @@ var blackholecatpicked = false;
 var spacecatpicked = false;
 var blackholecatexist = false;
 var spacecatexist = false;
+var microcatpicked = false;
 
 var fishbowling = false;
 var lamping = false;
+var bactoriaing = false;
 
 var fishbowlPosition;
 var lampPosition;

@@ -1,5 +1,5 @@
 function readNotes(){
-	if(readingSpaceReport == false && inTelescope == false && readingNotes == false){
+	if(readingSpaceReport == false && inTelescope == false && readingNotes == false && inMicro == false){
 		this.notes = game.add.button(-500, -150, 'notes', closeNotes, this, 0, 0, 0);
 		
 	}
