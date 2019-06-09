@@ -5,10 +5,10 @@ function stairEvent(){
         this.stair = this.add.sprite(0, 0, 'stair');
         if(staircatpicked == false){
 			this.stairCatImage = this.add.sprite(0, 0, 'staircatImage');
-			this.rollstaircat = this.add.button(700, 100, 'trigger', rollingStairCat, this, 0, 0, 0);
+			this.rollstaircat = this.add.button(860, 40, 'trigger', rollingStairCat, this, 0, 0, 0);
 			this.rollstaircat.anchor.set(0.5);
-			this.rollstaircat.width = 250;
-			this.rollstaircat.height = 300;
+			this.rollstaircat.width = 150;
+			this.rollstaircat.height = 150;
         }
         this.backFromStair = this.add.button(0, 0, 'back', stairOut, this, 0, 0, 0);
     }
@@ -20,7 +20,7 @@ function rollingStairCat(){
     this.rollstaircat.destroy();
     this.backFromStair.destroy();
     this.stairCat = this.add.sprite(0, 0, 'staircat', 'step1');
-    this.stairCat.animations.add('roll', ['step1', 'step2', 'step3', 'step4'], 2, false);
+    this.stairCat.animations.add('roll', ['step1', 'step2', 'step3', 'step4', 'step5', 'step6', 'step7'], 3, false);
     this.stairCat.animations.play('roll');
     this.pickstaircat = this.add.button(300, 500, 'trigger', pickStairCat, this, 0, 0, 0);
     this.pickstaircat.anchor.set(0.5);

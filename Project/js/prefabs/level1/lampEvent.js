@@ -5,9 +5,9 @@ function openLampCabinet(){
 	if(inOven == false && inPipe == false && inStair == false){
 		this.openCloset.play();
 		lampCabinetOpen = true;
-		this.closelampcabinet = game.add.button(700, 208, 'lampcabinet', closeLampCabinet, this, 0, 0, 0);
-		this.closelampcabinet.width = 150;
-		this.closelampcabinet.height = 85;
+		this.closelampcabinet = game.add.button(663, 166, 'lampcabinet', closeLampCabinet, this, 0, 0, 0);
+		//this.closelampcabinet.width = 150;
+		//this.closelampcabinet.height = 85;
 	
 	if(lamppicked == false){
 		this.lamp = game.add.button(760, 215, 'lamp', pickLamp, this, 0, 0, 0);
@@ -86,10 +86,9 @@ function turnOnLamp(){
 		this.lampSwitch.height = 200;//150
 		if(shadowcatpicked == false){
 			this.firstCat.destroy();
-			this.shadowCat = game.add.button(160, 440, 'shadowcat', pickshadowCat, this, 0, 0, 0);
-			this.shadowCat.width = 300;
-			this.shadowCat.height = 150;
-			this.firstCat = game.add.button(150, 480, 'firstcat', findFirstCat, this, 0, 0, 0);
+			this.firstCat = game.add.button(160, 420, 'firstcat', findFirstCat, this, 0, 0, 0);
+			this.shadowCat = game.add.button(160, 420, 'shadowcat', pickshadowCat, this, 0, 0, 0);
+
 		}
 		this.backbar.destroy();
 	}

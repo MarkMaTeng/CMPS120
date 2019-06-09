@@ -28,8 +28,10 @@ var lamppicked = false;
 var steamcatpicked = false;
 var staircatpicked = false;
 var longcatpicked = false;
-var havePipeCat = false;
 var shadowcatpicked = false;
+
+var havePipeCat = false;
+var haveLongCat = false;
 
 
 //level 2

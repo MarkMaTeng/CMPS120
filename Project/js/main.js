@@ -21,54 +21,71 @@ MainMenu.prototype = {
 		game.load.audio('stairCatSound', 'assets/audio/stairCat.mp3');
 		this.load.path = 'assets/img/';
 
-		// Level 1 img assets
-		this.load.image('test', 'test.png');
-		this.load.atlas('atlas', 'atlassprites.png', 'atlassprites.json');
+		////////////////////////
+		// Level 1 img assets //
+		////////////////////////
 		this.load.image('arrowKey', 'level1/arrowKey.png');
 		this.load.image('background1', 'level1/background.png');
 		this.load.image('title', 'level1/title.png');
 		this.load.image('startbutton', 'level1/oventrigger.png' );
 		this.load.image('firstcat', 'level1/cat.png' );
-		
-		this.load.atlas('pipecat', 'level1/pipecat.png', 'level1/pipecat.json');
 		this.load.atlas('scorebar', 'level1/scorebar.png', 'level1/scorebar.json');
 
+
+		// pipe cat //
+		this.load.atlas('pipecat', 'level1/pipecat.png', 'level1/pipecat.json');
+		this.load.image('pipe', 'level1/pipe.png');
+
+		// banana cat //
+		this.load.image('banana', 'level1/banana.png');
+		this.load.image('bananacat', 'level1/bananacat.png');
+
+		// cupcake cat //
 		this.load.image('openoven', 'level1/openoven.png');
 		this.load.image('creamcupcake', 'level1/creamcupcake.png');
 		this.load.image('cupcakecat', 'level1/cupcakecat.png');
 		this.load.image('cupcake', 'level1/cupcake.png');
 		this.load.image('oventrigger', 'level1/oventrigger.png');
-
-		this.load.image('pipe', 'level1/pipe.png');
 		this.load.image('trigger', 'level1/oventrigger.png' );//oventrigger.png
 		this.load.image('back', 'level1/back.png');
-		this.load.image('banana', 'level1/banana.png');
-		this.load.image('bananacat', 'level1/bananacat.png');
+		
+
+		// lamp cat //
 		this.load.image('lamp', 'level1/lamp.png');
-		//this.load.image('lampcabinet', 'level1/cat.png');
+		this.load.image('shadowcat', 'level1/shadowCat.PNG');
+		this.load.image('socket', 'level1/socket.png');
+		this.load.image('lampopen', 'level1/lampOpen.png');
+
+		// fishbowl cat //
 		this.load.image('fishbowl', 'level1/fishbowl.png');
 		this.load.image('fishbowlcabinet', 'level1/fishbowlcabinet.png');
 		this.load.image('fishbowlcat', 'level1/fishbowlcat.png');
 		this.load.image('lampcabinet', 'level1/lampCabinet.png');
+
+		// steam cat //
 		this.load.image('steamcat', 'level1/steamcat.png');
-		//this.load.image('itembar', 'platform.png');
+		
+		// stair cat //
 		this.load.image('stair', 'level1/steps.png');
 		this.load.image('lyingcat', 'level1/lyingcat.png');
 		this.load.atlas('staircat', 'level1/stairStep.png', 'level1/stairStep.json');
 		this.load.image('staircatImage', 'level1/step1.PNG');
-		this.load.image('phone', 'level1/cphone.png');
+
+		// long cat
+		this.load.image('phone', 'level1/phone.png');
+		this.load.image('nophone', 'level1/nophone.png');
 		this.load.image('pano', 'level1/panoMode.png');
-		this.load.image('longcatphoto', 'level1/longCatPhoto.jpg');
+		this.load.image('longcatphoto', 'level1/longCatPhoto.png');
 		this.load.image('longcat', 'level1/longcatSprite.png');
-		this.load.image('shadowcat', 'level1/shadowCat.PNG');
-		this.load.image('socket', 'level1/socket.png');
-		this.load.image('lampopen', 'level1/lampOpen.png');
+		
 		
 		this.load.image('sinkcloset', 'level1/sinkcloset.png');
 		this.load.image('upcloset', 'level1/upCloset.png');
 		this.load.image('fishbone', 'level1/fishBone.png');
 		
-		// Level 2 img assets
+		////////////////////////
+		// Level 2 img assets //
+		////////////////////////
 		this.load.image('background2', 'level2/bg.png');
 		this.load.image('crowcat', 'level2/crowCat.png');
 		this.load.image('crow1', 'level2/crow1.png');
@@ -89,24 +106,11 @@ MainMenu.prototype = {
 		this.title = this.add.sprite(0, 0, 'title');
 		this.title.width = 960;
 		this.title.height = 750;
-		this.startbutton = this.add.button(440, 680, 'startbutton', clickStart, this, 0, 0, 0 ); // 420, 350
+		this.startbutton = this.add.button(440, 570, 'startbutton', clickStart, this, 0, 0, 0 ); 
 		
 		
-
-		this.mainMenuCat = this.add.sprite(420, 520, 'firstcat');
-		this.mainMenuCat.anchor.set(0.5, 0.5);
-		this.physics.arcade.enable(this.mainMenuCat);
-		this.mainMenuCat.body.velocity.x = -200;
 	},
 	update: function() {
-		if(this.mainMenuCat.x <= 50){
-			this.mainMenuCat.body.velocity.x = 200;
-			
-		}
-		if(this.mainMenuCat.x >= 900){
-			this.mainMenuCat.body.velocity.x = -200;
-			
-		}
 		
 	}
 }
@@ -156,7 +160,8 @@ Level1.prototype = {
 		this.upKey.anchor.set(0.5);
 
 		
-		scorebar = game.add.sprite(850, 100, 'scorebar', '1');
+		scorebar = game.add.sprite(0, 0, 'scorebar', '1');
+
 
 		this.fishbowlCabinet = game.add.button(610, 150, 'trigger', openFishBowlCabinet, this, 0, 0, 0);
 		this.fishbowlCabinet.width = 150;
@@ -167,7 +172,7 @@ Level1.prototype = {
 		this.stairtrigger.width = 80;
 		this.stairtrigger.height = 80;
 
-		this.lampCabinet = game.add.button(750, 220, 'trigger', openLampCabinet, this, 0, 0, 0);
+		this.lampCabinet = game.add.button(750, 200, 'trigger', openLampCabinet, this, 0, 0, 0);
 		this.lampCabinet.width = 75;
 		this.lampCabinet.height = 75;
 		
@@ -175,9 +180,8 @@ Level1.prototype = {
 		this.steamPot.width = 30;
 		this.steamPot.height = 30;
 
-		this.phone = game.add.button(560, 350, 'phone', phoneEvent, this, 0, 0, 0);
-		this.phone.width = 30;
-		this.phone.height = 40;
+		this.phone = game.add.button(580, 280, 'phone', phoneEvent, this, 0, 0, 0);
+		
 		
 		
 		//ovencat
@@ -197,7 +201,9 @@ Level1.prototype = {
 		this.fishbowlCatTrigger = game.add.button(220, 0, 'trigger', fishbowlCatComing, this, 0, 0, 0);
 		
 		//shadow and first cat
-		this.firstCat = game.add.button(150, 480, 'firstcat', findFirstCat, this, 0, 0, 0);
+		this.firstCat = game.add.button(160, 420, 'firstcat', findFirstCat, this, 0, 0, 0);
+		
+
 		this.socket = game.add.button(20, 560, 'socket', turnOnLamp, this, 0,0,0);
         this.socket.width = 30;
         this.socket.height = 30;
@@ -231,7 +237,8 @@ Level1.prototype = {
 			}	
 			
 		}
-	
+
+		
 	},
 	
 };
@@ -252,7 +259,8 @@ Level2.prototype = {
 		this.background.width = 960;
 		this.background.height = 620;
 
-		scorebar = game.add.sprite(850, 100, 'scorebar', '1');
+		scorebar = game.add.sprite(0, 0, 'scorebar', '1');
+
 		catFinded = 1;
 
 
