@@ -124,4 +124,5 @@ function restart(){
  co3ing = false;
  so4ing = false;
  bgm.stop();
+ game.sound.mute = false;
 }

@@ -1,5 +1,5 @@
 function stairEvent(){
-    if(inOven == false && inBanana == false && inPipe == false && inPhone == false){//判断是否在别的场景
+    if(inOven == false && inBanana == false && inPipe == false && inPhone == false && inStair == false){//判断是否在别的场景
         inStair = true;
         console.log(inOven, inBanana, inPipe, inStair);
         this.stair = this.add.sprite(0, 0, 'stair');

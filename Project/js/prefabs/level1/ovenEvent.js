@@ -2,7 +2,7 @@
 //打开烤箱
 function ovenEvent(){
 
-	if(inBanana == false && inPipe == false && inStair == false && inPhone == false){//先判断是否在别的场景中以免穿模
+	if(inBanana == false && inPipe == false && inStair == false && inPhone == false && inOven == false){//先判断是否在别的场景中以免穿模
 		inOven = true;//在烤箱场景
 		console.log(inOven, inBanana, inPipe);
 		this.ovenSound.play();

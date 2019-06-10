@@ -1,10 +1,6 @@
 
 var MainMenu = function(game) {};
 MainMenu.prototype = {
-	init: function() {
-		this.level = 0; 	// tracks the player's level
-		this.life = 3;		// tracks the player's life
-	},
 	preload: function() {
 		// set load path and load assets
 		this.load.path = 'assets/audio/';
@@ -42,6 +38,8 @@ MainMenu.prototype = {
 		this.load.image('title', 'title.png');
 		this.load.image('intro', 'intro.png');
 		this.load.image('intro2', 'intro2.png');
+		this.load.image('gameover', 'gameover.png');
+		this.load.image('congradulation', 'congradulation.png');
 		this.load.image('restartButton', 'restartButton.png');
 		this.load.image('muteButton', 'muteButton2.png');
 		this.load.image('muteButton2', 'muteButton.png');
@@ -384,8 +382,8 @@ Level2.prototype = {
 		/*this.monitor.width = 115;
 		this.monitor.height = 60;*/
 		this.tea = this.add.button(700, 230, 'tea', pickUpTea, this, 0, 0, 0);
-		this.co3 = this.add.button(850, 180, 'co3', pickCo3, this, 0, 0, 0);
-		this.so4 = this.add.button(900, 180, 'so4', pickSo4, this, 0, 0, 0);
+		this.co3 = this.add.button(850, 170, 'co3', pickCo3, this, 0, 0, 0);
+		this.so4 = this.add.button(900, 170, 'so4', pickSo4, this, 0, 0, 0);
 	},
 	update: function() {
 		if(bactoriaing == true){
@@ -432,10 +430,24 @@ GameOver.prototype = {
 
 	},
 	update: function() {
-		// GameOver logic
-		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-			game.state.start('MainMenu');
-		}
+		this.background = this.add.sprite(0, 0, 'gameover');
+
+		this.startbutton = this.add.button(720, 450, 'startbutton', goCongradulation, this, 0, 0, 0 ); 
+		this.startbutton.width = 200;
+		this.startbutton.height = 150;
+	}
+}
+
+var Congradulation = function(game) {};
+Congradulation.prototype = {
+	create: function() {
+
+	},
+	update: function() {
+		this.background = this.add.sprite(-60, 0, 'congradulation');
+		this.startbutton = this.add.button(420, 350, 'startbutton', restart, this, 0, 0, 0 ); 
+		this.startbutton.width = 250;
+		this.startbutton.height = 130;
 	}
 }
 
@@ -457,9 +469,8 @@ function goIntro2(){
 	
 }
 
-function restart(){
-	game.state.start('MainMenu', true, false);
-
+function goCongradulation(){
+	game.state.start('Congradulation', true, false);
 	
 }
 
@@ -486,15 +497,16 @@ function goLevel2(){
 //分数条进度
 function scoreBarPlus(){	
 	catFinded ++;
-	console.log(catFinded);
+	console.log(game.stage.name);
 
 	var scoreBarFrame = catFinded.toString();
 	scorebar.frameName = scoreBarFrame;
-	//if(catFinded == 10){
-		this.upKey = game.add.button(64, 32, 'arrowKey', goIntro2, this, 0, 0, 0);
-		this.upKey.anchor.set(0.5);
-		
-	//}
+	if(cupcakecatpicked == true && catFinded == 10){
+		game.state.start('Intro2', true, false);
+	}
+	if(crowcatpicked == true && catFinded == 7){
+		game.state.start('GameOver', true, false);
+	}
 }
 
 function meow(){
@@ -538,4 +550,5 @@ game.state.add('Level1', Level1);
 game.state.add('Intro2', Intro2);
 game.state.add('Level2', Level2);
 game.state.add('GameOver', GameOver);
+game.state.add('Congradulation', Congradulation);
 game.state.start('MainMenu');
