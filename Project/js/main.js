@@ -355,7 +355,7 @@ Level2.prototype = {
 		this.bossChair.width = 200;
 		this.bossChair.height = 250;
 
-		this.tree = game.add.button(540, 100, 'crow1', crowcat, this, 0, 0, 0);
+		this.tree = game.add.button(540, 80, 'crow1', crowcat, this, 0, 0, 0);
 		this.tree.width = 300;
 		this.tree.height = 75;
 
