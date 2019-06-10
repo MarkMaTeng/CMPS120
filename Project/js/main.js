@@ -341,6 +341,7 @@ Level2.prototype = {
 	},
 	create: function() {
 
+		itemDistance = 0;
 		bgm.loop = true;
 		bgm.volume = 0.25;
 		
