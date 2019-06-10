@@ -5,6 +5,7 @@ MainMenu.prototype = {
 		// set load path and load assets
 		this.load.path = 'assets/audio/';
 		game.load.audio('bgm', 'bgm.wav' );
+		game.load.audio('bgm2', 'bgm2.wav' );
 		game.load.audio('Meow1', 'meow1.mp3')
 		game.load.audio('Meow2', 'meow2.mp3')
 		game.load.audio('Meow3', 'meow3.mp3')
@@ -28,6 +29,7 @@ MainMenu.prototype = {
 		game.load.audio('chairSound', 'level2/chairSound.mp3');
 		game.load.audio('computerSound', 'level2/computerSound.mp3');
 		game.load.audio('noteSound', 'level2/noteSound.mp3');
+		game.load.audio('pencilSound', 'level2/pencilSound.wav');
 
 
 
@@ -99,7 +101,7 @@ MainMenu.prototype = {
 		this.load.image('pano', 'level1/panoMode.png');
 		this.load.image('longcatphoto', 'level1/longCatPhoto.png');
 		this.load.image('longcat', 'level1/longcatSprite.png');
-		
+		this.load.image('returnBoss', 'level1/returnBoss.png');
 		
 		this.load.image('sinkcloset', 'level1/sinkcloset.png');
 		this.load.image('upcloset', 'level1/upCloset.png');
@@ -132,6 +134,8 @@ MainMenu.prototype = {
 		this.load.image('t', 'level2/t.png');
 		this.load.image('computercat', 'level2/computerCat.png');
 		this.load.image('letters', 'level2/letters.png');
+		this.load.image('pencil1', 'level2/pencil1.png');
+		this.load.image('pencil2', 'level2/pencil2.png');
 	},
 	create: function() {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -199,6 +203,7 @@ Level1.prototype = {
 		this.pipeSound = game.add.audio('pipeSound');
 		this.steamSound = game.add.audio('steamSound');
 		bgm = game.add.audio('bgm');
+
 
 	},
 	create: function() {
@@ -324,16 +329,23 @@ var Level2 = function(game) {};
 Level2.prototype = {
 	init: function() {
 		
-		
+		this.bgm2 = game.add.audio('bgm2');
 		this.birdSound = game.add.audio('birdSound');
 		this.chairSound = game.add.audio('chairSound');
 		this.computerSound = game.add.audio('computerSound');
 		this.noteSound = game.add.audio('noteSound');
-
+		this.pencilSound = game.add.audio('pencilSound');
+		bgm.stop();
+		bgm = game.add.audio('bgm2');
 
 	},
 	create: function() {
 
+		bgm.loop = true;
+		bgm.volume = 0.25;
+		
+		bgm.play();
+	
 		this.background = this.add.sprite(0, 0, 'background2');
 		//this.background.anchor.set(0.5,0.5);
 
@@ -355,9 +367,8 @@ Level2.prototype = {
 		this.bossChair.width = 200;
 		this.bossChair.height = 250;
 
-		this.tree = game.add.button(540, 80, 'crow1', crowcat, this, 0, 0, 0);
-		this.tree.width = 300;
-		this.tree.height = 75;
+		this.tree = game.add.button(588, 12, 'crow1', crowcat, this, 0, 0, 0);
+		
 
 		this.reportOnSpace = game.add.button(520, 250, 'trigger', readReportOnSpace, this, 0, 0, 0);
 		this.reportOnComputer = game.add.button(870, 250, 'trigger', readNotes, this, 0, 0, 0);
@@ -369,13 +380,16 @@ Level2.prototype = {
 		this.telescope.height = 50;
 		
 		//显微镜
-		this.glass = this.add.sprite(640, 250, 'glass', 'glass1');
-		this.pickGlass = game.add.button(650, 260, 'trigger', pickUpGlass, this, 0, 0, 0);
+		this.glass = this.add.sprite(905, 250, 'glass', 'glass1');
+		this.pickGlass = game.add.button(905, 260, 'trigger', pickUpGlass, this, 0, 0, 0);
 		this.pickGlass.width = 35;
 		this.pickGlass.height = 35;
 		this.micro = game.add.button(770, 200, 'trigger', goToMicro, this, 0, 0, 0 );
 		this.micro.width = 100;
 		this.micro.height = 75;
+
+		//pencil cat
+		this.pencil = this.add.button(650, 250, 'pencil1', pencilEvent, this, 0, 0, 0);
 
 		//电脑
 		this.monitor = this.add.button(35, 195, 'letters', unlockComputer, this, 0, 0, 0);
@@ -444,6 +458,7 @@ Congradulation.prototype = {
 
 	},
 	update: function() {
+		this.stage.backgroundColor = "#FFFFFF";
 		this.background = this.add.sprite(-60, 0, 'congradulation');
 		this.startbutton = this.add.button(420, 350, 'startbutton', restart, this, 0, 0, 0 ); 
 		this.startbutton.width = 250;
@@ -497,14 +512,15 @@ function goLevel2(){
 //分数条进度
 function scoreBarPlus(){	
 	catFinded ++;
-	console.log(game.stage.name);
+	console.log(catFinded);
 
 	var scoreBarFrame = catFinded.toString();
 	scorebar.frameName = scoreBarFrame;
+	
 	if(cupcakecatpicked == true && catFinded == 10){
-		game.state.start('Intro2', true, false);
+		this.returnBoss = game.add.button(0,0, 'returnBoss', goIntro2, this, 0,0,0);
 	}
-	if(crowcatpicked == true && catFinded == 7){
+	if(crowcatpicked == true && catFinded == 8){
 		game.state.start('GameOver', true, false);
 	}
 }

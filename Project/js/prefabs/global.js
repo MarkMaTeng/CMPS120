@@ -45,6 +45,7 @@ var spacecatpicked = false;
 var blackholecatexist = false;
 var spacecatexist = false;
 var microcatpicked = false;
+var pencilcatpicked = false;
 
 var tComplete = false;
 var cComplete = false;
@@ -113,6 +114,7 @@ function restart(){
  blackholecatexist = false;
  spacecatexist = false;
  microcatpicked = false;
+ pencilcatpicked = false;
 
  tComplete = false;
  cComplete = false;
