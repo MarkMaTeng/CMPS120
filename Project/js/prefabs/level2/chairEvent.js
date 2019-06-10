@@ -7,7 +7,7 @@ function bosscat(){
 		this.bossChair.width = 200;
 		this.bossChair.height = 250;
 		
-		this.bossCat = game.add.button(100, 420, 'bosscat', pickBossCat, this, 0, 0, 0);
+		this.bossCat = game.add.button(100,360, 'bosscat', pickBossCat, this, 0, 0, 0);
 		
 		}
 

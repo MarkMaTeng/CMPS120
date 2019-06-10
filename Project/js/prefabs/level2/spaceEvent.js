@@ -93,7 +93,7 @@ function spaceMinus(){
 
 function pickBlackholeCat(){
 	this.blackholeCat.destroy();
-	this.Meow1.play();
+	meow();
 	blackholecatpicked = true;
 	scoreBarPlus();
 	

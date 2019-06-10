@@ -1,6 +1,6 @@
 //PIPE场景
 function pipeEvent(){
-	if(inOven == false && inBanana == false && inStair == false && inPhone == false){//判断是否在别的场景
+	if(inOven == false && inBanana == false && inStair == false && inPhone == false && inPipe == false){//判断是否在别的场景
 		inPipe = true;
 		console.log(inOven, inBanana, inPipe);
 		this.pipe = this.add.sprite(0, 0, 'pipe');
@@ -15,7 +15,6 @@ function pipeCatOut(){
 	this.openpipe.destroy();
 	this.pipeSound.play();
 	if(pipecatpicked == false && pipeAlreadyout == false){
-		pipeAlreadyout == true;
 		this.pipeCat = this.add.sprite(0, 0, 'pipecat', 'pipecat1');
 		this.pipeCat.animations.add('flow', ['pipecat1', 'pipecat2', 'pipecat3'], 2, false);
 		this.pipeCat.animations.play('flow');

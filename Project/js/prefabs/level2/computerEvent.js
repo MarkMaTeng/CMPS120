@@ -1,6 +1,6 @@
 function readNotes(){
 	if(readingSpaceReport == false && inTelescope == false && readingNotes == false && inMicro == false){
-		this.notes = game.add.button(-500, -40+140, 'notes', closeNotes, this, 0, 0, 0);
+		this.notes = game.add.button(-500, -140, 'notes', closeNotes, this, 0, 0, 0);
 		this.noteSound.play();
 	}
 	
@@ -41,13 +41,16 @@ function unlockComputer(){
 	if(teaing == true){
 		teaing = false;
 		if(tComplete == false){
-			letterT = this.add.sprite(82, 190, 't');
+			this.letterT = this.add.sprite(102, 202, 't');
+			this.letterT.width = 30;
+			this.letterT.height = 30;
 			this.movingTea.destroy();
 			
 		}else{
 			this.movingTea.destroy();
 			this.letterC.destroy();
-			this.computerCat = this.add.sprite(32, 100, 'firstcat');
+			this.computerCat = this.add.button(32, 180, 'computercat', pickComputerCat, this, 0, 0, 0);
+			this.monitor.destroy();
 		}
 		this.backbar.destroy();
 		cComplete = true;
@@ -56,18 +59,28 @@ function unlockComputer(){
 	if(co3ing == true){
 		co3ing = false
 		if(cComplete == false){
-			this.letterC = this.add.sprite(32, 190, 'c');
+			this.letterC = this.add.sprite(40, 200, 'c');
+			this.letterC.width = 30;
+			this.letterC.height = 30;
 			this.movingCo3.destroy();
 
 			
 		}else{
 			this.movingCo3.destroy();
 			this.letterT.destroy();
-			this.computerCat = this.add.sprite(32, 100, 'firstcat');
+			this.computerCat = this.add.button(32, 180, 'computercat', pickComputerCat, this, 0, 0, 0);
+			this.monitor.destroy();
 		}
 		this.backbar.destroy();
 		tComplete = true;
 	}
+	
+}
+
+function pickComputerCat(){
+	this.computerCat.destroy();
+	meow();
+	scoreBarPlus();
 	
 }
 

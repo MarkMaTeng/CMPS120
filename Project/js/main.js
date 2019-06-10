@@ -41,7 +41,10 @@ MainMenu.prototype = {
 		////////////////////////
 		this.load.image('title', 'title.png');
 		this.load.image('intro', 'intro.png');
-
+		this.load.image('intro2', 'intro2.png');
+		this.load.image('restartButton', 'restartButton.png');
+		this.load.image('muteButton', 'muteButton2.png');
+		this.load.image('muteButton2', 'muteButton.png');
 
 		////////////////////////
 		// Level 1 img assets //
@@ -129,6 +132,8 @@ MainMenu.prototype = {
 		this.load.image('co3', 'level2/co3.png');
 		this.load.image('c', 'level2/c.png');
 		this.load.image('t', 'level2/t.png');
+		this.load.image('computercat', 'level2/computerCat.png');
+		this.load.image('letters', 'level2/letters.png');
 	},
 	create: function() {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -164,6 +169,24 @@ Intro.prototype = {
 	}
 }
 
+// Intro2 state
+var Intro2 = function(game) {};
+Intro2.prototype = {
+	create: function() {
+		// sound asset
+
+		this.background = this.add.sprite(0, 0, 'intro2');
+
+		this.startbutton = this.add.button(720, 450, 'startbutton', goLevel2, this, 0, 0, 0 ); 
+		this.startbutton.width = 200;
+		this.startbutton.height = 150;
+
+	},
+	update: function() {
+		
+	}
+}
+
 // Level1 state
 var Level1 = function() {};
 Level1.prototype = {
@@ -177,16 +200,16 @@ Level1.prototype = {
 		this.cameraSound = game.add.audio('cameraSound');
 		this.pipeSound = game.add.audio('pipeSound');
 		this.steamSound = game.add.audio('steamSound');
-		this.bgm = game.add.audio('bgm');
+		bgm = game.add.audio('bgm');
 
 	},
 	create: function() {
 		
-		this.bgm.loop = true;
-		this.bgm.volume = 0.25;
+		bgm.loop = true;
+		bgm.volume = 0.25;
 
 		
-		this.bgm.play();
+		bgm.play();
 
 		// add bg as tile sprite
 		
@@ -202,13 +225,17 @@ Level1.prototype = {
 		
 		/*this.itemInUse = game.add.group();
 		this.physics.arcade.enable(this.itemInUse);*/
-		this.restart = this.add.button(930,720, 'firstcat', restart, this, 0, 0, 0);
-		this.restart.width = 50;
-		this.restart.height = 50;
+		this.restart = this.add.button(900,700, 'restartButton', restart, this, 0, 0, 0);
+		this.restart.width = 45;
+		this.restart.height = 45;
+		this.mute = this.add.button(900,650, 'muteButton', mute, this, 0, 0, 0);
+		this.mute.width = 45;
+		this.mute.height = 45;
+
 		
 		// add arrows
-		this.upKey = game.add.button(64, 32, 'arrowKey', goLevel2, this, 0, 0, 0);
-		this.upKey.anchor.set(0.5);
+		/*this.upKey = game.add.button(64, 32, 'arrowKey', goLevel2, this, 0, 0, 0);
+		this.upKey.anchor.set(0.5);*/
 
 		
 		scorebar = game.add.sprite(0, 0, 'scorebar1', '1');
@@ -312,9 +339,12 @@ Level2.prototype = {
 		this.background = this.add.sprite(0, 0, 'background2');
 		//this.background.anchor.set(0.5,0.5);
 
-		this.restart = this.add.button(930,720, 'firstcat', restart, this, 0, 0, 0);
-		this.restart.width = 50;
-		this.restart.height = 50;
+		this.restart = this.add.button(900,700, 'restartButton', restart, this, 0, 0, 0);
+		this.restart.width = 45;
+		this.restart.height = 45;
+		this.mute = this.add.button(900,650, 'muteButton', mute, this, 0, 0, 0);
+		this.mute.width = 45;
+		this.mute.height = 45;
 
 		scorebar = game.add.sprite(50, 20, 'scorebar2', '1');
 		scorebar.width = 120;
@@ -350,9 +380,9 @@ Level2.prototype = {
 		this.micro.height = 75;
 
 		//电脑
-		this.monitor = this.add.button(30, 175, 'trigger', unlockComputer, this, 0, 0, 0);
-		this.monitor.width = 115;
-		this.monitor.height = 60;
+		this.monitor = this.add.button(35, 195, 'letters', unlockComputer, this, 0, 0, 0);
+		/*this.monitor.width = 115;
+		this.monitor.height = 60;*/
 		this.tea = this.add.button(700, 230, 'tea', pickUpTea, this, 0, 0, 0);
 		this.co3 = this.add.button(850, 180, 'co3', pickCo3, this, 0, 0, 0);
 		this.so4 = this.add.button(900, 180, 'so4', pickSo4, this, 0, 0, 0);
@@ -422,8 +452,30 @@ function goLevel1(){
 	
 }
 
+function goIntro2(){
+	game.state.start('Intro2', true, false);
+	
+}
+
 function restart(){
 	game.state.start('MainMenu', true, false);
+
+	
+}
+
+function mute(){
+	this.mute.destroy();
+	if(game.sound.mute == true){
+		game.sound.mute = false;
+		this.mute = this.add.button(900,650, 'muteButton', mute, this, 0, 0, 0);
+		this.mute.width = 45;
+		this.mute.height = 45;
+	}else{
+		game.sound.mute = true;
+		this.mute = this.add.button(900,650, 'muteButton2', mute, this, 0, 0, 0);
+		this.mute.width = 45;
+		this.mute.height = 45;
+	}
 	
 }
 
@@ -438,6 +490,11 @@ function scoreBarPlus(){
 
 	var scoreBarFrame = catFinded.toString();
 	scorebar.frameName = scoreBarFrame;
+	//if(catFinded == 10){
+		this.upKey = game.add.button(64, 32, 'arrowKey', goIntro2, this, 0, 0, 0);
+		this.upKey.anchor.set(0.5);
+		
+	//}
 }
 
 function meow(){
@@ -478,6 +535,7 @@ var game = new Phaser.Game(960, 750, Phaser.AUTO, 'phaser');//950, 620
 game.state.add('MainMenu', MainMenu);
 game.state.add('Intro', Intro);
 game.state.add('Level1', Level1);
+game.state.add('Intro2', Intro2);
 game.state.add('Level2', Level2);
 game.state.add('GameOver', GameOver);
 game.state.start('MainMenu');

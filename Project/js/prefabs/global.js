@@ -62,3 +62,66 @@ var teaPosition;
 var co3Position;
 var so4Position;
 var bactoriaPosition;
+var bgm;
+
+function restart(){
+	game.state.start('MainMenu', true, false);
+	 catFinded = 1;
+ scorebar;
+ spacePosition = 1;
+
+//level 1
+ lampCabinetOpen = false;
+ inOven = false;
+ inPipe = false;
+ inBanana = false;
+ inStair = false;
+ inPhone =false;
+ pipeAlreadyout = false;
+
+//level 2
+ readingSpaceReport = false;
+ readingNotes = false;
+ inTelescope = false;
+ inTree = false;
+ inMicro = false;
+
+
+ itemDistance = 0;
+
+
+//level 1
+ cupcakecatpicked = false;
+ pipecatpicked = false;
+ bananacatpicked = false;
+ fishbowlpicked = false;
+ lamppicked = false;
+ steamcatpicked = false;
+ staircatpicked = false;
+ longcatpicked = false;
+ shadowcatpicked = false;
+
+ havePipeCat = false;
+ haveLongCat = false;
+
+
+//level 2
+ crowcatpicked = false;
+ bosscatpicked = false;
+ blackholecatpicked = false;
+ spacecatpicked = false;
+ blackholecatexist = false;
+ spacecatexist = false;
+ microcatpicked = false;
+
+ tComplete = false;
+ cComplete = false;
+
+ fishbowling = false;
+ lamping = false;
+ bactoriaing = false;
+ teaing = false;
+ co3ing = false;
+ so4ing = false;
+ bgm.stop();
+}
