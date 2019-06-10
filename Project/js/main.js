@@ -76,7 +76,7 @@ MainMenu.prototype = {
 
 		// lamp cat //
 		this.load.image('lamp', 'level1/lamp.png');
-		this.load.image('shadowcat', 'level1/shadowCat.PNG');
+		this.load.image('shadowcat', 'level1/shadowCat.png');
 		this.load.image('socket', 'level1/socket.png');
 		this.load.image('lampopen', 'level1/lampOpen.png');
 
@@ -93,7 +93,7 @@ MainMenu.prototype = {
 		this.load.image('stair', 'level1/steps.png');
 		this.load.image('lyingcat', 'level1/lyingcat.png');
 		this.load.atlas('staircat', 'level1/stairStep.png', 'level1/stairStep.json');
-		this.load.image('staircatImage', 'level1/step1.PNG');
+		this.load.image('staircatImage', 'level1/step1.png');
 
 		// long cat
 		this.load.image('phone', 'level1/phone.png');
