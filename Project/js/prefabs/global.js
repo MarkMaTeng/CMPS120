@@ -21,6 +21,7 @@ var inMicro = false;
 
 var itemDistance = 0;
 
+
 //level 1
 var cupcakecatpicked = false;
 var pipecatpicked = false;

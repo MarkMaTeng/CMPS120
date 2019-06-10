@@ -25,6 +25,7 @@ function moveLeft(){
 	this.catbackground.x += 300;
 	if(this.catbackground.x >= -200)
 		{
+			this.cameraSound.play();
 			this.leftKey.destroy();
 		}
 }

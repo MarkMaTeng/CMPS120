@@ -1,6 +1,7 @@
 function crowcat(){
 	if(crowcatpicked == false && readingSpaceReport == false && inTelescope == false && readingNotes == false && inMicro == false){
 		this.tree.destroy();
+		this.birdSound.play();
 		this.tree = game.add.sprite(570, 80, 'crow2');
 		this.tree.width = 300;
 		this.tree.height = 100;
@@ -14,7 +15,7 @@ function crowcat(){
 }
 
 function pickCrowCat(){
-	this.Meow1.play();
+	meow();
 	crowcatpicked = true;
 	this.crowCat.destroy();
 	this.tree.destroy();

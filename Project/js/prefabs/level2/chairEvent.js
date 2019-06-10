@@ -2,6 +2,7 @@
 function bosscat(){
 	if(bosscatpicked == false && readingSpaceReport == false && inTelescope == false && readingNotes == false && inMicro == false){
 		this.bossChair.destroy();
+		this.chairSound.play();
 		this.bossChair = game.add.sprite(100, 350, 'chair2');
 		this.bossChair.width = 200;
 		this.bossChair.height = 250;
@@ -13,7 +14,7 @@ function bosscat(){
 }
 
 function pickBossCat(){
-	this.Meow1.play();
+	meow();
 	bosscatpicked = true;
 	this.bossCat.destroy();
 	scoreBarPlus();

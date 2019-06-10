@@ -1,6 +1,7 @@
 function readReportOnSpace(){
 	if(readingSpaceReport == false && inTelescope == false && readingNotes == false && inMicro == false){
 		readingSpaceReport = true;
+		this.noteSound.play();
 		this.spaceReport = this.add.button(0, 0, 'reportonspace', finishReadSpaceRepory, this, 0, 0, 0);
 	}
 }
@@ -8,6 +9,7 @@ function readReportOnSpace(){
 
 function finishReadSpaceRepory(){
 	this.spaceReport.destroy();
+	this.noteSound.play();
 	readingSpaceReport = false;
 }
 
@@ -99,7 +101,7 @@ function pickBlackholeCat(){
 
 function pickSpaceCat(){
 	this.spaceCat.destroy();
-	this.Meow1.play();
+	meow();
 	spaceCat = true;
 	scoreBarPlus();
 	

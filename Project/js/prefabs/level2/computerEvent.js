@@ -1,20 +1,21 @@
 function readNotes(){
 	if(readingSpaceReport == false && inTelescope == false && readingNotes == false && inMicro == false){
-		this.notes = game.add.button(-500, -150, 'notes', closeNotes, this, 0, 0, 0);
-		
+		this.notes = game.add.button(-500, -40+140, 'notes', closeNotes, this, 0, 0, 0);
+		this.noteSound.play();
 	}
 	
 }
 
 function closeNotes(){
 	this.notes.destroy();
+	this.noteSound.play();
 	readingNotes = false;
 	
 }
 
 function pickUpTea(){
 	this.tea.destroy();
-	this.teaItem = this.add.button(130*itemDistance, 640, 'tea', usingTea, this, 0, 0, 0);
+	this.teaItem = this.add.button(40+140*itemDistance, 660, 'tea', usingTea, this, 0, 0, 0);
 	this.teaItem.width = 80;
 	this.teaItem.height = 80;
 	teaPosition = itemDistance;
@@ -31,7 +32,7 @@ function usingTea(){
 	this.physics.arcade.enable(this.movingTea);
 	teaing = true;
 		
-	this.backbar = game.add.button(0, 640, 'trigger', returnTea, this, 0, 0, 0);
+	this.backbar = game.add.button(0, 660, 'trigger', returnTea, this, 0, 0, 0);
 	this.backbar.width = 960;
 	this.backbar.height = 120;
 }
@@ -42,6 +43,7 @@ function unlockComputer(){
 		if(tComplete == false){
 			letterT = this.add.sprite(82, 190, 't');
 			this.movingTea.destroy();
+			
 		}else{
 			this.movingTea.destroy();
 			this.letterC.destroy();
@@ -56,6 +58,7 @@ function unlockComputer(){
 		if(cComplete == false){
 			this.letterC = this.add.sprite(32, 190, 'c');
 			this.movingCo3.destroy();
+
 			
 		}else{
 			this.movingCo3.destroy();
@@ -70,7 +73,7 @@ function unlockComputer(){
 
 function pickCo3(){
 	this.co3.destroy();
-	this.co3Item = this.add.button(130*itemDistance, 640, 'co3', usingCo3, this, 0, 0, 0);
+	this.co3Item = this.add.button(40+140*itemDistance, 660, 'co3', usingCo3, this, 0, 0, 0);
 	this.co3Item.width = 80;
 	this.co3Item.height = 80;
 	co3Position = itemDistance;
@@ -86,8 +89,7 @@ function usingCo3(){
 		this.movingCo3.anchor.set(0.5);
 		this.physics.arcade.enable(this.movingCo3);
 		co3ing = true;
-			
-		this.backbar = game.add.button(0, 640, 'trigger', returnCo3, this, 0, 0, 0);
+		this.backbar = game.add.button(0, 660, 'trigger', returnCo3, this, 0, 0, 0);
 		this.backbar.width = 960;
 		this.backbar.height = 120;
 	}
@@ -95,7 +97,7 @@ function usingCo3(){
 
 function pickSo4(){
 	this.so4.destroy();
-	this.so4Item = this.add.button(130*itemDistance, 640, 'so4', usingSo4, this, 0, 0, 0);
+	this.so4Item = this.add.button(40+140*itemDistance, 660, 'so4', usingSo4, this, 0, 0, 0);
 	this.so4Item.width = 80;
 	this.so4Item.height = 80;
 	so4Position = itemDistance;
@@ -113,7 +115,7 @@ function usingSo4(){
 		this.physics.arcade.enable(this.movingSo4);
 		so4ing = true;
 			
-		this.backbar = game.add.button(0, 640, 'trigger', returnSo4, this, 0, 0, 0);
+		this.backbar = game.add.button(0, 660, 'trigger', returnSo4, this, 0, 0, 0);
 		this.backbar.width = 960;
 		this.backbar.height = 120;
 	}
@@ -126,7 +128,7 @@ function returnTea(){
 	teaing = false;
 	this.movingTea.destroy();
 	this.backbar.destroy();
-	this.teaItem = game.add.button(130* teaPosition, 640, 'tea', usingTea, this,0, 0, 0);
+	this.teaItem = game.add.button(40+140* teaPosition, 660, 'tea', usingTea, this,0, 0, 0);
 	this.teaItem.width = 80;
 	this.teaItem.height = 80;
 }
@@ -135,7 +137,7 @@ function returnCo3(){
 	co3ing = false;
 	this.movingCo3.destroy();
 	this.backbar.destroy();
-	this.co3Item = game.add.button(130* co3Position, 640, 'co3', usingCo3, this,0, 0, 0);
+	this.co3Item = game.add.button(40+140* co3Position, 660, 'co3', usingCo3, this,0, 0, 0);
 	this.co3Item.width = 80;
 	this.co3Item.height = 80;
 }
@@ -144,7 +146,7 @@ function returnSo4(){
 	so4ing = false;
 	this.movingSo4.destroy();
 	this.backbar.destroy();
-	this.so4Item = game.add.button(130* so4Position, 640, 'so4', usingSo4, this,0, 0, 0);
+	this.so4Item = game.add.button(40+140* so4Position, 660, 'so4', usingSo4, this,0, 0, 0);
 	this.so4Item.width = 80;
 	this.so4Item.height = 80;	
 	

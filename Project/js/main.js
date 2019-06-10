@@ -9,18 +9,33 @@ MainMenu.prototype = {
 		// set load path and load assets
 		this.load.path = 'assets/audio/';
 		game.load.audio('bgm', 'bgm.wav' );
-		game.load.audio('appear', 'appear.wav' );
 		game.load.audio('Meow1', 'meow1.mp3')
 		game.load.audio('Meow2', 'meow2.mp3')
 		game.load.audio('Meow3', 'meow3.mp3')
-		game.load.audio('closeCloset', 'DoorClose.mp3');
-		game.load.audio('openCloset', 'DoorOpen.mp3');
-		game.load.audio('lampSound', 'openLamp.mp3');
-		game.load.audio('ovenSound', 'openOven.wav');
-		game.load.audio('stairCatSound', 'stairCat.mp3');
-		this.load.path = 'assets/img/';
+		game.load.audio('Meow4', 'meow4.mp3')
+		game.load.audio('Meow5', 'meow5.mp3')
+		game.load.audio('Meow6', 'meow6.mp3')
+		game.load.audio('appear', 'appear.wav')
 
-		this.load.image('test', 'test.png');
+		//level 1 sound asset
+		game.load.audio('closeCloset', 'level1/DoorClose.mp3');
+		game.load.audio('openCloset', 'level1/DoorOpen.mp3');
+		game.load.audio('lampSound', 'level1/openLamp.mp3');
+		game.load.audio('ovenSound', 'level1/openOven.wav');
+		game.load.audio('stairCatSound', 'level1/stairCat.mp3');
+		game.load.audio('cameraSound', 'level1/Camera.wav');
+		game.load.audio('pipeSound', 'level1/pipeSound.mp3');
+		game.load.audio('steamSound', 'level1/steamSound.mp3');
+
+		//level 2 sound asset
+		game.load.audio('birdSound', 'level2/birdSound.mp3');
+		game.load.audio('chairSound', 'level2/chairSound.mp3');
+		game.load.audio('computerSound', 'level2/computerSound.mp3');
+		game.load.audio('noteSound', 'level2/noteSound.mp3');
+
+
+
+		this.load.path = 'assets/img/';
 		////////////////////////
 		// Beginning img assets //
 		////////////////////////
@@ -35,7 +50,7 @@ MainMenu.prototype = {
 		this.load.image('background1', 'level1/background.png');
 		this.load.image('startbutton', 'level1/oventrigger.png' );
 		this.load.image('firstcat', 'level1/cat.png' );
-		this.load.atlas('scorebar', 'level1/scorebar.png', 'level1/scorebar.json');
+		this.load.atlas('scorebar1', 'level1/scorebar.png', 'level1/scorebar.json');
 
 
 		// pipe cat //
@@ -93,6 +108,8 @@ MainMenu.prototype = {
 		// Level 2 img assets //
 		////////////////////////
 		this.load.image('background2', 'level2/bg.png');
+		this.load.atlas('scorebar2', 'level2/scorebar.png', 'level2/scorebar.json');
+
 		this.load.image('crowcat', 'level2/crowCat.png');
 		this.load.image('crow1', 'level2/crow1.png');
 		this.load.image('crow2', 'level2/crow2.png');
@@ -132,13 +149,8 @@ MainMenu.prototype = {
 // Intro state
 var Intro = function(game) {};
 Intro.prototype = {
-	init: function(score) {
-
-		this.Meow1 = game.add.audio('Meow1');
-		this.Meow2 = game.add.audio('Meow2');
-		this.Meow3 = game.add.audio('Meow3');
-	},
 	create: function() {
+		// sound asset
 
 		this.background = this.add.sprite(0, 0, 'intro');
 
@@ -155,23 +167,25 @@ Intro.prototype = {
 // Level1 state
 var Level1 = function() {};
 Level1.prototype = {
-	create: function() {
-		// background color
-		game.stage.backgroundColor = "#223344";
+	init: function() {
 		
-		// add bgm
-		this.bgm = game.add.audio('bgm');
-		this.bgm.loop = true;
-		this.bgm.volume = 0.25;
-		this.appear = game.add.audio('appear');
-		this.Meow1 = game.add.audio('Meow1');
-		this.Meow2 = game.add.audio('Meow2');
-		this.Meow3 = game.add.audio('Meow3');
 		this.closeCloset = game.add.audio('closeCloset');
 		this.openCloset = game.add.audio('openCloset');
 		this.lampSound = game.add.audio('lampSound');
 		this.ovenSound = game.add.audio('ovenSound');
 		this.stairCatSound = game.add.audio('stairCatSound');
+		this.cameraSound = game.add.audio('cameraSound');
+		this.pipeSound = game.add.audio('pipeSound');
+		this.steamSound = game.add.audio('steamSound');
+		this.bgm = game.add.audio('bgm');
+
+	},
+	create: function() {
+		
+		this.bgm.loop = true;
+		this.bgm.volume = 0.25;
+
+		
 		this.bgm.play();
 
 		// add bg as tile sprite
@@ -197,7 +211,7 @@ Level1.prototype = {
 		this.upKey.anchor.set(0.5);
 
 		
-		scorebar = game.add.sprite(0, 0, 'scorebar', '1');
+		scorebar = game.add.sprite(0, 0, 'scorebar1', '1');
 
 
 		this.fishbowlCabinet = game.add.button(610, 150, 'trigger', openFishBowlCabinet, this, 0, 0, 0);
@@ -283,11 +297,15 @@ Level1.prototype = {
 // define level2 state and methods
 var Level2 = function(game) {};
 Level2.prototype = {
-	init: function(score) {
-		this.score = score;
-		this.Meow1 = game.add.audio('Meow1');
-		this.Meow2 = game.add.audio('Meow2');
-		this.Meow3 = game.add.audio('Meow3');
+	init: function() {
+		
+		
+		this.birdSound = game.add.audio('birdSound');
+		this.chairSound = game.add.audio('chairSound');
+		this.computerSound = game.add.audio('computerSound');
+		this.noteSound = game.add.audio('noteSound');
+
+
 	},
 	create: function() {
 
@@ -298,7 +316,9 @@ Level2.prototype = {
 		this.restart.width = 50;
 		this.restart.height = 50;
 
-		scorebar = game.add.sprite(0, 0, 'scorebar', '1');
+		scorebar = game.add.sprite(50, 20, 'scorebar2', '1');
+		scorebar.width = 120;
+		scorebar.height = 150;
 
 		catFinded = 1;
 
@@ -321,21 +341,21 @@ Level2.prototype = {
 		this.telescope.height = 50;
 		
 		//显微镜
-		this.glass = this.add.sprite(640, 230, 'glass', 'glass1');
-		this.pickGlass = game.add.button(650, 240, 'trigger', pickUpGlass, this, 0, 0, 0);
+		this.glass = this.add.sprite(640, 250, 'glass', 'glass1');
+		this.pickGlass = game.add.button(650, 260, 'trigger', pickUpGlass, this, 0, 0, 0);
 		this.pickGlass.width = 35;
 		this.pickGlass.height = 35;
-		this.micro = game.add.button(770, 150, 'trigger', goToMicro, this, 0, 0, 0 );
-		this.micro.width = 50;
-		this.micro.height = 50;
+		this.micro = game.add.button(770, 200, 'trigger', goToMicro, this, 0, 0, 0 );
+		this.micro.width = 100;
+		this.micro.height = 75;
 
 		//电脑
 		this.monitor = this.add.button(30, 175, 'trigger', unlockComputer, this, 0, 0, 0);
 		this.monitor.width = 115;
 		this.monitor.height = 60;
-		this.tea = this.add.button(700, 200, 'tea', pickUpTea, this, 0, 0, 0);
-		this.co3 = this.add.button(850, 200, 'co3', pickCo3, this, 0, 0, 0);
-		this.so4 = this.add.button(900, 200, 'so4', pickSo4, this, 0, 0, 0);
+		this.tea = this.add.button(700, 230, 'tea', pickUpTea, this, 0, 0, 0);
+		this.co3 = this.add.button(850, 180, 'co3', pickCo3, this, 0, 0, 0);
+		this.so4 = this.add.button(900, 180, 'so4', pickSo4, this, 0, 0, 0);
 	},
 	update: function() {
 		if(bactoriaing == true){
@@ -378,9 +398,6 @@ Level2.prototype = {
 // define GameOver state and methods
 var GameOver = function(game) {};
 GameOver.prototype = {
-	init: function(score) {
-		this.score = score;
-	},
 	create: function() {
 
 	},
@@ -427,7 +444,12 @@ function meow(){
 	this.Meow1 = game.add.audio('Meow1');
 	this.Meow2 = game.add.audio('Meow2');
 	this.Meow3 = game.add.audio('Meow3');
-	switch(this.game.rnd.integerInRange(1, 3)){
+	this.Meow4 = game.add.audio('Meow4');
+	this.Meow5 = game.add.audio('Meow5');
+	this.Meow6 = game.add.audio('Meow6');
+	
+
+	switch(this.game.rnd.integerInRange(1, 6)){
         case 1:
             this.Meow1.play();
             break;
@@ -437,6 +459,16 @@ function meow(){
         case 3:
             this.Meow3.play();
             break;
+        case 4:
+            this.Meow4.play();
+            break;
+        case 5:
+            this.Meow5.play();
+            break;
+        case 6:
+            this.Meow6.play();
+            break;
+
     }
 }
 

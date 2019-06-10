@@ -13,6 +13,7 @@ function pipeEvent(){
 //打开水龙头
 function pipeCatOut(){
 	this.openpipe.destroy();
+	this.pipeSound.play();
 	if(pipecatpicked == false && pipeAlreadyout == false){
 		pipeAlreadyout == true;
 		this.pipeCat = this.add.sprite(0, 0, 'pipecat', 'pipecat1');

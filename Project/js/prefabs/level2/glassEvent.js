@@ -1,8 +1,7 @@
 function pickUpGlass(){
 	this.glass.frameName = 'glass2';
 	this.pickGlass.destroy();
-	this.bactoria = this.add.button(150*itemDistance, 700, 'bactoria', usingBactoria, this, 0, 0, 0);
-	this.bactoria.anchor.set(0.5);
+	this.bactoria = this.add.button(40+140*itemDistance, 660, 'bactoria', usingBactoria, this, 0, 0, 0);
 	this.bactoria.width = 80;
 	this.bactoria.height = 80;
 	bactoriaPosition = itemDistance;
@@ -19,7 +18,7 @@ function usingBactoria(){
 		this.physics.arcade.enable(this.movingBactoria);
 		bactoriaing = true;
 		
-		this.backbar = game.add.button(0, 640, 'trigger', returnBactoria, this, 0, 0, 0);
+		this.backbar = game.add.button(0, 660, 'trigger', returnBactoria, this, 0, 0, 0);
 		this.backbar.width = 960;
 		this.backbar.height = 120;
 	}
@@ -31,7 +30,7 @@ function goToMicro(){
 		bactoriaing = false;
 		this.movingBactoria.destroy();
 		this.backbar.destroy();
-		this.bactoria = game.add.button(130* bactoriaPosition, 640, 'bactoria', usingBactoria, this,0, 0, 0);
+		this.bactoria = game.add.button(40+140* bactoriaPosition, 660, 'bactoria', usingBactoria, this,0, 0, 0);
 		this.bactoria.width = 80;
 		this.bactoria.height = 80;
 
@@ -57,7 +56,7 @@ function pickMicroCat(){
 	this.microCat.destroy();
 	microcatpicked = true;
 	this.microWorld.frameName = 'micro2';
-	this.Meow1.play();
+	meow();
 	scoreBarPlus();
 	
 }
@@ -67,7 +66,7 @@ function returnBactoria(){
 	bactoriaing = false;
 	this.movingBactoria.destroy();
 	this.backbar.destroy();
-	this.bactoria = game.add.button(130* bactoriaPosition, 640, 'bactoria', usingBactoria, this,0, 0, 0);
+	this.bactoria = game.add.button(40+140* bactoriaPosition, 660, 'bactoria', usingBactoria, this,0, 0, 0);
 	this.bactoria.width = 80;
 	this.bactoria.height = 80;
 }
